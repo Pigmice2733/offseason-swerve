@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 
-  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final Drivetrain drivetrain = new Drivetrain();
   
   private final 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    swerveSubsystem.setDefaultCommand(new DriveWithJoysticks(
-      swerveSubsystem,
+    drivetrain.setDefaultCommand(new DriveWithJoysticks(
+      drivetrain,
       () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
       () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
       () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),

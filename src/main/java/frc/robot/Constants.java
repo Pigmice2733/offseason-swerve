@@ -27,12 +27,14 @@ public final class Constants {
     }
 
     public final static class DrivetrainConfig {
+
+        
         public static final double DRIVE_SPEED = 0.2;
         public static final double TURN_SPEED = 0.2;
     }
     /* FOR THE LOVE OF GOD CHANGE THESE CONSTANTS HOLY FU- */
     public final static class SwerveModuleConfig {
-        public static final double kWheelDiametersMeter = Units.inchesToMeters(4);
+        public static final double kWheelDiametersMeter = units.inchesToMeters(4);
         public static final double kDriveMotorGearRatio = 1 / 5.8426;
         public static final double kTurningMotorGearRatio = 1 / 18.0;
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiametersMeter;

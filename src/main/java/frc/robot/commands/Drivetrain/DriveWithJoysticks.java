@@ -6,20 +6,20 @@ package frc.robot.commands.Drivetrain;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveWithJoysticks extends CommandBase {
   public final Drivetrain drivetrain;
   public final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
-  pulic final SwerveSubsystem swerveSubsystem;
 
-  public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> xSpeedFunction, Supplier<Double> ySpeedFunction, Supplier<Double> turningSpeedFunction, Supplier<boolean> fieldOrientedFunction) {
-    this.swerveSubsystem = swerveSubsystem;
+  public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> xSpeedFunction, Supplier<Double> ySpeedFunction, Supplier<Double> turningSpeedFunction, Supplier<Boolean> fieldOrientedFunction) {
+    this.drivetrain = drivetrain;
     this.xSpeedFunction = xSpeedFunction;
     this.ySpeedFunction = ySpeedFunction;
     this.turningSpeedFunction = turningSpeedFunction;
-    this.fieldOrientedFunction = fieldOrientedFunction:
+    this.fieldOrientedFunction = fieldOrientedFunction;
     addRequirements(drivetrain);
   }
 
@@ -46,7 +46,7 @@ public class DriveWithJoysticks extends CommandBase {
         if (fieldOrientedFunction.get()) {
             // Relative to field
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                    xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+                    xSpeed, ySpeed, turningSpeed, drivetrain.getRotation2d());
         } else {
             // Relative to robot
             chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
@@ -56,12 +56,12 @@ public class DriveWithJoysticks extends CommandBase {
         SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
         // 6. Output each module states to wheels
-        swerveSubsystem.setModuleStates(moduleStates);
+        drivetrain.setModuleStates(moduleStates);
   }
 
   @Override
   public void end(boolean interrupted) {
-      swerveSubsystem.stopModules();
+      drivetrain.stopModules();
   }
 
   @Override
