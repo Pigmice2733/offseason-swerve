@@ -79,7 +79,7 @@ public class SwerveModule {
 
     public void setDesiredState(SwerveModuleState state){
         if(Math.abs(state.speedMetersPerSecond) < 0.001){
-            stop():
+            stop();
             return;
         }
         state = SwerveModuleState.optimize(state, getState().angle);
