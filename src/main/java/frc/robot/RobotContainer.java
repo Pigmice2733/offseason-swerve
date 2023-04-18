@@ -16,8 +16,20 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  
+  private final 
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    swerveSubsystem.setDefaultCommand(new DriveWithJoysticks(
+      swerveSubsystem,
+      () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
+      () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
+      () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
+      () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)
+    ));
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -29,7 +41,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {}
-
+    new JoystickButton(driverJoystick, 2).whenPressed(() -> swerveSubsystem.zeroHeading());
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

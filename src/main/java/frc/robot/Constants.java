@@ -16,18 +16,29 @@ public final class Constants {
     public static final double AXIS_THRESHOLD = 0.1;
 
     public final static class CANConfig {
-        public static final int FRONT_LEFT_DRIVE = 0;
-        public static final int FRONT_LEFT_TURN = 0;
-        public static final int FRONT_RIGHT_DRIVE = 0;
-        public static final int FRONT_RIGHT_TURN = 0;
-        public static final int BACK_LEFT_DRIVE = 0;
-        public static final int BACK_LEFT_TURN = 0;
-        public static final int BACK_RIGHT_DRIVE = 0;
-        public static final int BACK_RIGHT_TURN = 0;
+        public static final int FRONT_LEFT_DRIVE = 1;
+        public static final int FRONT_LEFT_TURN = 2;
+        public static final int FRONT_RIGHT_DRIVE = 3;
+        public static final int FRONT_RIGHT_TURN = 4;
+        public static final int BACK_LEFT_DRIVE = 5;
+        public static final int BACK_LEFT_TURN = 6;
+        public static final int BACK_RIGHT_DRIVE = 7;
+        public static final int BACK_RIGHT_TURN = 8;
     }
 
     public final static class DrivetrainConfig {
         public static final double DRIVE_SPEED = 0.2;
         public static final double TURN_SPEED = 0.2;
+    }
+    /* FOR THE LOVE OF GOD CHANGE THESE CONSTANTS HOLY FU- */
+    public final static class SwerveModuleConfig {
+        public static final double kWheelDiametersMeter = Units.inchesToMeters(4);
+        public static final double kDriveMotorGearRatio = 1 / 5.8426;
+        public static final double kTurningMotorGearRatio = 1 / 18.0;
+        public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiametersMeter;
+        public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
+        public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
+        public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
+        public static final double kPTurning = 0.5;
     }
 }
