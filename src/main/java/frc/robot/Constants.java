@@ -49,13 +49,13 @@ public final class Constants {
         // public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
     
         public static final SwerveModuleConfig F_L_MODULE_CONFIG = 
-            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+            new SwerveModuleConfig(10, 11, 0, false, false, false, 0);
         public static final SwerveModuleConfig F_R_MODULE_CONFIG = 
-            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+            new SwerveModuleConfig(12, 13, 1, false, false, false, 0);
         public static final SwerveModuleConfig B_L_MODULE_CONFIG = 
-            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+            new SwerveModuleConfig(14, 15, 2, false, false, false, 0);
         public static final SwerveModuleConfig B_R_MODULE_CONFIG = 
-            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+            new SwerveModuleConfig(16, 17, 3, false, false, false, 0);
 
         public static final double TURN_P = 0.001;
     }

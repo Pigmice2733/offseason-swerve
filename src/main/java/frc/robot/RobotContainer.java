@@ -24,11 +24,9 @@ public class RobotContainer {
   private final XboxController driver = new XboxController(0);
   private final XboxController operator = new XboxController(1);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     controls = new Controls(driver, operator);
     drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain, controls::getDriveSpeedX, controls::getDriveSpeedY, controls::getTurnSpeed));
-    // Configure the button bindings
     configureButtonBindings();
   }
 
