@@ -31,37 +31,37 @@ public class Drivetrain extends SubsystemBase {
   public static final double MAX_VOLTAGE = 12.0;
 
   SwerveModule frontLeftModule = Mk4iSwerveModuleHelper.createNeo(
-    // drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
-    // .withSize(2, 4)
-    // .withPosition(0, 0),
+    drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
+    .withSize(2, 4)
+    .withPosition(0, 0),
     Mk4iSwerveModuleHelper.GearRatio.L2,
     1, 2, 0, 0);
 
   SwerveModule frontRightModule = Mk4iSwerveModuleHelper.createNeo(
-    // drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
-    // .withSize(2, 4)
-    // .withPosition(0, 0),
+    drivetrainTab.getLayout("Front Right Module", BuiltInLayouts.kList)
+    .withSize(2, 4)
+    .withPosition(0, 0),
     Mk4iSwerveModuleHelper.GearRatio.L2,
     3, 4, 1, 0);
 
   SwerveModule backLeftModule = Mk4iSwerveModuleHelper.createNeo(
-    // drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
-    // .withSize(2, 4)
-    // .withPosition(0, 0),
+    drivetrainTab.getLayout("Back Left Module", BuiltInLayouts.kList)
+    .withSize(2, 4)
+    .withPosition(0, 0),
     Mk4iSwerveModuleHelper.GearRatio.L2,
     5, 6, 2, 0);
     
   SwerveModule backRightModule = Mk4iSwerveModuleHelper.createNeo(
-    // drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
-    // .withSize(2, 4)
-    // .withPosition(0, 0),
+    drivetrainTab.getLayout("Back Right Module", BuiltInLayouts.kList)
+    .withSize(2, 4)
+    .withPosition(0, 0),
     Mk4iSwerveModuleHelper.GearRatio.L2,
     7, 8, 3, 0);
 
   private final AHRS gyro = new AHRS();
 
 
-  private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+  private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
     // Front left
     new Translation2d(0.2921, 0.2921),
     // Front right
@@ -80,7 +80,7 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
     frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
