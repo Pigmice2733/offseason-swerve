@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.Drivetrain.DriveWithJoysticks;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,18 +20,14 @@ public class RobotContainer {
 
   private final Drivetrain drivetrain = new Drivetrain();
   
-  private final 
+  private final Controls controls;
+  private final XboxController driver = new XboxController(0);
+  private final XboxController operator = new XboxController(1);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    drivetrain.setDefaultCommand(new DriveWithJoysticks(
-      drivetrain,
-      () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
-      () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
-      () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
-      () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)
-    ));
-
+    controls = new Controls(driver, operator);
+    drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain, controls::getDriveSpeedX, controls::getDriveSpeedY, controls::getTurnSpeed));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -41,7 +39,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {}
-    new JoystickButton(driverJoystick, 2).whenPressed(() -> swerveSubsystem.zeroHeading());
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

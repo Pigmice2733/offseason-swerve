@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -27,14 +29,19 @@ public final class Constants {
     }
 
     public final static class DrivetrainConfig {
-
-        
         public static final double DRIVE_SPEED = 0.2;
         public static final double TURN_SPEED = 0.2;
+
+        public static final boolean DRIVE_MOTOR_INVERTED = false;
+        public static final boolean TURN_MOTOR_INVERTED = false;
+        public static final boolean ABS_ENCODER_INVERTED = false;
+        public static final double ABS_ENCODER_OFFSET = 0;
+        public static final int ABS_ENCODER_PORT = 0;
+        public static final double MAX_PHYSICAL_SPEED = 5;
     }
     /* FOR THE LOVE OF GOD CHANGE THESE CONSTANTS HOLY FU- */
     public final static class SwerveModuleConfig {
-        public static final double kWheelDiametersMeter = units.inchesToMeters(4);
+        public static final double kWheelDiametersMeter = Units.inchesToMeters(4);
         public static final double kDriveMotorGearRatio = 1 / 5.8426;
         public static final double kTurningMotorGearRatio = 1 / 18.0;
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiametersMeter;
