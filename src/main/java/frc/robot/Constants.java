@@ -38,16 +38,25 @@ public final class Constants {
         public static final double ABS_ENCODER_OFFSET = 0;
         public static final int ABS_ENCODER_PORT = 0;
         public static final double MAX_PHYSICAL_SPEED = 5;
-    }
-    /* FOR THE LOVE OF GOD CHANGE THESE CONSTANTS HOLY FU- */
-    public final static class SwerveModuleConfig {
-        public static final double kWheelDiametersMeter = Units.inchesToMeters(4);
-        public static final double kDriveMotorGearRatio = 1 / 5.8426;
-        public static final double kTurningMotorGearRatio = 1 / 18.0;
-        public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiametersMeter;
-        public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
-        public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
-        public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
-        public static final double kPTurning = 0.5;
+
+        // Constants from video for path following
+        // public static final double kWheelDiametersMeter = Units.inchesToMeters(4);
+        // public static final double kDriveMotorGearRatio = 1 / 5.8426;
+        // public static final double kTurningMotorGearRatio = 1 / 18.0;
+        // public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiametersMeter;
+        // public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
+        // public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
+        // public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
+    
+        public static final SwerveModuleConfig F_L_MODULE_CONFIG = 
+            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+        public static final SwerveModuleConfig F_R_MODULE_CONFIG = 
+            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+        public static final SwerveModuleConfig B_L_MODULE_CONFIG = 
+            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+        public static final SwerveModuleConfig B_R_MODULE_CONFIG = 
+            new SwerveModuleConfig(0, 0, 0, false, false, false, 0);
+
+        public static final double TURN_P = 0.001;
     }
 }

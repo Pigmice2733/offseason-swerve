@@ -5,50 +5,25 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
-import frc.robot.Constants.CANConfig;
 import frc.robot.Constants.DrivetrainConfig;
-import frc.robot.Constants.SwerveModuleConfig;
-
 
 public class Drivetrain extends SubsystemBase{
     private final SwerveModule frontLeft = new SwerveModule(
-        CANConfig.FRONT_LEFT_DRIVE,
-        CANConfig.FRONT_LEFT_TURN,
-        DrivetrainConfig.DRIVE_MOTOR_INVERTED,
-        DrivetrainConfig.TURN_MOTOR_INVERTED,
-        DrivetrainConfig.ABS_ENCODER_PORT,
-        DrivetrainConfig.ABS_ENCODER_OFFSET,
-        DrivetrainConfig.ABS_ENCODER_INVERTED);
+        DrivetrainConfig.F_L_MODULE_CONFIG);
     
     private final SwerveModule frontRight = new SwerveModule(
-        CANConfig.FRONT_RIGHT_DRIVE,
-        CANConfig.FRONT_RIGHT_TURN,
-        DrivetrainConfig.DRIVE_MOTOR_INVERTED,
-        DrivetrainConfig.TURN_MOTOR_INVERTED,
-        DrivetrainConfig.ABS_ENCODER_PORT,
-        DrivetrainConfig.ABS_ENCODER_OFFSET,
-        DrivetrainConfig.ABS_ENCODER_INVERTED);
+        DrivetrainConfig.F_R_MODULE_CONFIG);
+
 
     private final SwerveModule backLeft = new SwerveModule(
-        CANConfig.BACK_LEFT_DRIVE,
-        CANConfig.BACK_LEFT_TURN,
-        DrivetrainConfig.DRIVE_MOTOR_INVERTED,
-        DrivetrainConfig.TURN_MOTOR_INVERTED,
-        DrivetrainConfig.ABS_ENCODER_PORT,
-        DrivetrainConfig.ABS_ENCODER_OFFSET,
-        DrivetrainConfig.ABS_ENCODER_INVERTED);
+        DrivetrainConfig.B_L_MODULE_CONFIG);
+
 
     private final SwerveModule backRight = new SwerveModule(
-        CANConfig.BACK_LEFT_DRIVE,
-        CANConfig.BACK_LEFT_TURN,
-        DrivetrainConfig.DRIVE_MOTOR_INVERTED,
-        DrivetrainConfig.TURN_MOTOR_INVERTED,
-        DrivetrainConfig.ABS_ENCODER_PORT,
-        DrivetrainConfig.ABS_ENCODER_OFFSET,
-        DrivetrainConfig.ABS_ENCODER_INVERTED);
+        DrivetrainConfig.B_R_MODULE_CONFIG);
+
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(new Translation2d(-1, 1), new Translation2d(1, 1), new Translation2d(-1, -1), new Translation2d(-1, -1));
     private final AHRS gyro = new AHRS(); 
