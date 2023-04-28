@@ -19,7 +19,7 @@ public class Controls {
         this.operator = operator;
     }
 
-    LinearFilter driveSpeedYFilter = LinearFilter.singlePoleIIR(0.1, 0.02);
+    LinearFilter driveSpeedYFilter = LinearFilter.singlePoleIIR(0.05, 0.02);
     /** @return The Left Y Axis multiplied by the drive speed. */
     public double getDriveSpeedY() {
         double joystickValue = driver.getLeftY();
@@ -29,7 +29,7 @@ public class Controls {
         return joystickValue * DrivetrainConfig.DRIVE_SPEED;
     }
 
-    LinearFilter driveSpeedXFilter = LinearFilter.singlePoleIIR(0.1, 0.02);
+    LinearFilter driveSpeedXFilter = LinearFilter.singlePoleIIR(0.05, 0.02);
     /** @return The Left X Axis multiplied by the drive speed. */
     public double getDriveSpeedX() {
         double joystickValue = driver.getLeftX();
@@ -39,7 +39,7 @@ public class Controls {
         return joystickValue * DrivetrainConfig.DRIVE_SPEED;
     }
 
-    LinearFilter turnSpeedFilter = LinearFilter.singlePoleIIR(0.1, 0.02);
+    LinearFilter turnSpeedFilter = LinearFilter.singlePoleIIR(0.05, 0.02);
 
     /** @return The Right X Axis multiplied by the turn speed. */
     public double getTurnSpeed() {

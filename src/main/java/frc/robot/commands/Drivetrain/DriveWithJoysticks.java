@@ -25,6 +25,6 @@ public class DriveWithJoysticks extends CommandBase {
 
   @Override
   public void execute() {
-    drivetrain.driveChassisSpeeds(new ChassisSpeeds(driveSpeedX.get(), driveSpeedY.get(), turnSpeed.get()));
+    drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get(), drivetrain.getHeading()));
   }
 }
