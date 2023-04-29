@@ -3,9 +3,7 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DrivetrainConfig;
-import frc.robot.subsystems.Drivetrain;
 
 public class Controls {
     XboxController driver;
@@ -26,7 +24,7 @@ public class Controls {
         joystickValue = MathUtil.applyDeadband(-joystickValue, threshold); // deals with stick drag
         joystickValue = driveSpeedYFilter.calculate(joystickValue); // input smoothing
 
-        return joystickValue * DrivetrainConfig.DRIVE_SPEED;
+        return joystickValue * DrivetrainConfig.MAX_DRIVE_SPEED;
     }
 
     LinearFilter driveSpeedXFilter = LinearFilter.singlePoleIIR(0.05, 0.02);
@@ -36,17 +34,16 @@ public class Controls {
         joystickValue = MathUtil.applyDeadband(-joystickValue, threshold); // deals with stick drag
         joystickValue = driveSpeedXFilter.calculate(joystickValue); // input smoothing
 
-        return joystickValue * DrivetrainConfig.DRIVE_SPEED;
+        return joystickValue * DrivetrainConfig.MAX_DRIVE_SPEED;
     }
 
     LinearFilter turnSpeedFilter = LinearFilter.singlePoleIIR(0.05, 0.02);
-
     /** @return The Right X Axis multiplied by the turn speed. */
     public double getTurnSpeed() {
         double joystickValue = driver.getRightX();
         joystickValue = MathUtil.applyDeadband(joystickValue, threshold); // deals with stick drag
         joystickValue = turnSpeedFilter.calculate(joystickValue); // input smoothing
 
-        return joystickValue * DrivetrainConfig.TURN_SPEED;
+        return joystickValue * DrivetrainConfig.MAX_TURN_SPEED;
     }
 }

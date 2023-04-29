@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -27,7 +32,23 @@ public final class Constants {
     }
 
     public final static class DrivetrainConfig {
-        public static final double DRIVE_SPEED = 2;
-        public static final double TURN_SPEED = 2.5;
+        public static final double MAX_DRIVE_SPEED = 2; // max meters / second
+        public static final double MAX_TURN_SPEED = 2.5; // max radians / second
+
+        public static final double TRACK_WIDTH_METERS = 0.5842; // distance from the center of one wheel to another (meters)
+        public final static SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
+            new Translation2d(TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2), // Front left
+            new Translation2d(TRACK_WIDTH_METERS/2, -TRACK_WIDTH_METERS/2), // Front right
+            new Translation2d(-TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2), // Back left
+            new Translation2d(-TRACK_WIDTH_METERS/2, -TRACK_WIDTH_METERS/2) // Back right
+        );
+
+        // Default values from example project
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
+            SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
+            SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
+        public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
+            Math.hypot(TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2);
+        public static final double MAX_VOLTAGE = 12.0;
     }
 }
