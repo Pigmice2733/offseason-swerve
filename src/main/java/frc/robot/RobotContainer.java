@@ -7,11 +7,9 @@ package frc.robot;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -59,7 +57,7 @@ public class RobotContainer {
     drivetrain.resetOdometry();
     PathPlannerTrajectory traj = PathPlanner.loadPath(
       "New Path",
-      new PathConstraints(1.0, 1.5));
+      new PathConstraints(1.5, 2.5));
 
       drivetrain.resetOdometry(traj.getInitialHolonomicPose());
 
