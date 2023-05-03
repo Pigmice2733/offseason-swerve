@@ -50,28 +50,28 @@ public class Drivetrain extends SubsystemBase {
                 .withDriveMotor(MotorType.NEO, 10)
                 .withSteerMotor(MotorType.NEO, 11)
                 .withSteerEncoderPort(20)
-                .withSteerOffset(Math.toRadians(30))
+                .withSteerOffset(Math.toRadians(290))
                 .build();
   frontRightModule = 
   new MkSwerveModuleBuilder().withGearRatio(SdsModuleConfigurations.MK4I_L2)
                 .withDriveMotor(MotorType.NEO, 13)
                 .withSteerMotor(MotorType.NEO, 12)
                 .withSteerEncoderPort(22)
-                //.withSteerOffset(Math.toRadians(142))
+                .withSteerOffset(Math.toRadians(319))
                 .build();
   backLeftModule =
   new MkSwerveModuleBuilder().withGearRatio(SdsModuleConfigurations.MK4I_L2)
                 .withDriveMotor(MotorType.NEO, 17)
                 .withSteerMotor(MotorType.NEO, 16)
                 .withSteerEncoderPort(26)
-                //.withSteerOffset(Math.toRadians(69))
+                .withSteerOffset(Math.toRadians(131+180))
                 .build();
   backRightModule =
   new MkSwerveModuleBuilder().withGearRatio(SdsModuleConfigurations.MK4I_L2)
                 .withDriveMotor(MotorType.NEO, 14)
                 .withSteerMotor(MotorType.NEO, 15)
                 .withSteerEncoderPort(24)
-                //.withSteerOffset(Math.toRadians(252))
+                .withSteerOffset(Math.toRadians(252))
                 .build();
 
     states = DrivetrainConfig.kinematics.toSwerveModuleStates(new ChassisSpeeds());
