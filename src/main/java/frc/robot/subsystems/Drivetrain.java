@@ -5,7 +5,8 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper;
+import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
+import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
@@ -35,33 +36,10 @@ public class Drivetrain extends SubsystemBase {
 
   public static final double MAX_VOLTAGE = 12.0;
 
-  SwerveModule frontLeftModule = Mk4iSwerveModuleHelper.createNeo(
-    drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
-    .withSize(2, 4)
-    .withPosition(0, 0),
-    Mk4iSwerveModuleHelper.GearRatio.L2,
-    10, 11, 20, -Math.toRadians(290));
-
-  SwerveModule frontRightModule = Mk4iSwerveModuleHelper.createNeo(
-    drivetrainTab.getLayout("Front Right Module", BuiltInLayouts.kList)
-    .withSize(2, 4)
-    .withPosition(0, 0),
-    Mk4iSwerveModuleHelper.GearRatio.L2,
-    13, 12, 22, -Math.toRadians(319));
-
-  SwerveModule backLeftModule = Mk4iSwerveModuleHelper.createNeo(
-    drivetrainTab.getLayout("Back Left Module", BuiltInLayouts.kList)
-    .withSize(2, 4)
-    .withPosition(0, 0),
-    Mk4iSwerveModuleHelper.GearRatio.L2,
-    17, 16, 26, -Math.toRadians(131+180));
-    
-  SwerveModule backRightModule = Mk4iSwerveModuleHelper.createNeo(
-    drivetrainTab.getLayout("Back Right Module", BuiltInLayouts.kList)
-    .withSize(2, 4)
-    .withPosition(0, 0),
-    Mk4iSwerveModuleHelper.GearRatio.L2,
-    14, 15, 24, -Math.toRadians(252));
+  private final SwerveModule frontLeftModule;
+  private final SwerveModule frontRightModule;
+  private final SwerveModule backLeftModule;
+  private final SwerveModule backRightModule;
 
   private final AHRS gyro = new AHRS();
   private final SwerveDriveOdometry odometry;
@@ -85,6 +63,55 @@ public class Drivetrain extends SubsystemBase {
   private SwerveModuleState[] states = new SwerveModuleState[4];
   
   public Drivetrain() {
+    frontLeftModule = new MkSwerveModuleBuilder()
+    .withLayout(drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
+      .withSize(2, 4)
+      .withPosition(0, 0))
+    .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+    .withDriveMotor(MotorType.NEO, 10)
+    .withSteerMotor(MotorType.NEO, 11)
+    .withSteerEncoderPort(20)
+    .withSteerOffset(-Math.toRadians(290))
+    .build();
+
+    frontRightModule = new MkSwerveModuleBuilder()
+      .withLayout(drivetrainTab.getLayout("Front Right Module", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(0, 0))
+      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+      .withDriveMotor(MotorType.NEO, 13)
+      .withSteerMotor(MotorType.NEO, 12)
+      .withSteerEncoderPort(22)
+      .withSteerOffset(-Math.toRadians(319))
+      .build();
+
+    backLeftModule = new MkSwerveModuleBuilder()
+      .withLayout(drivetrainTab.getLayout("Back Left Module", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(0, 0))
+      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+      .withDriveMotor(MotorType.NEO, 17)
+      .withSteerMotor(MotorType.NEO, 16)
+      .withSteerEncoderPort(26)
+      .withSteerOffset(-Math.toRadians(131+180))
+      .build();
+
+    backRightModule = new MkSwerveModuleBuilder()
+      .withLayout(drivetrainTab.getLayout("Back Right Module", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(0, 0))
+      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+      .withDriveMotor(MotorType.NEO, 14)
+      .withSteerMotor(MotorType.NEO, 15)
+      .withSteerEncoderPort(24)
+      .withSteerOffset(-Math.toRadians(252))
+      .build();
+
+    // frontRightModule.getDriveMotor().setInverted(false);
+    // backLeftModule.getDriveMotor().setInverted(false);
+    // backRightModule.getDriveMotor().setInverted(true);
+    // frontLeftModule.getDriveMotor().setInverted(true);
+
     states = kinematics.toSwerveModuleStates(new ChassisSpeeds());
     SwerveModulePosition[] positions = {new SwerveModulePosition(), new SwerveModulePosition(), new SwerveModulePosition(), new SwerveModulePosition() };
     odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), positions);
@@ -123,10 +150,10 @@ public class Drivetrain extends SubsystemBase {
 
   public SwerveModulePosition[] getModulePositions() {
     SwerveModulePosition[] positions = {
-      new SwerveModulePosition(frontLeftModule.getDriveVelocity(), new Rotation2d(frontLeftModule.getSteerAngle())),
-      new SwerveModulePosition(frontRightModule.getDriveVelocity(), new Rotation2d(frontRightModule.getSteerAngle())),
-      new SwerveModulePosition(backLeftModule.getDriveVelocity(), new Rotation2d(backLeftModule.getSteerAngle())),
-      new SwerveModulePosition(backRightModule.getDriveVelocity(), new Rotation2d(backRightModule.getSteerAngle()))
+      new SwerveModulePosition(frontLeftModule.getDriveDistance(), new Rotation2d(frontLeftModule.getSteerAngle())),
+      new SwerveModulePosition(frontRightModule.getDriveDistance(), new Rotation2d(frontRightModule.getSteerAngle())),
+      new SwerveModulePosition(backLeftModule.getDriveDistance(), new Rotation2d(backLeftModule.getSteerAngle())),
+      new SwerveModulePosition(backRightModule.getDriveDistance(), new Rotation2d(backRightModule.getSteerAngle()))
     };
     return positions;
   }
