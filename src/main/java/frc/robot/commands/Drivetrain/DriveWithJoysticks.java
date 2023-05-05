@@ -6,42 +6,32 @@ package frc.robot.commands.Drivetrain;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import javax.swing.text.html.HTMLDocument.BlockElement;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveWithJoysticks extends CommandBase {
   private final Drivetrain drivetrain;
   private final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
-  private PIDController controller = new PIDController(0.05, 0, 0);
+  private final Supplier<Boolean> fieldOriented;
 
-  public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY, Supplier<Double> turnSpeed) {
+  public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY, Supplier<Double> turnSpeed, Supplier<Boolean> fieldOriented) {
     this.drivetrain = drivetrain;
     this.driveSpeedX = driveSpeedX;
     this.driveSpeedY = driveSpeedY;
     this.turnSpeed = turnSpeed;
-
-    controller.enableContinuousInput(-180, 180);
-    controller.setTolerance(5);
+    this.fieldOriented = fieldOriented;
 
     addRequirements(drivetrain);
   }
 
   @Override
   public void execute() {
-    // Translation2d robotPose = drivetrain.getPose().getTranslation();
-    // Translation2d targetPose = new Translation2d(4, 0);
-
-    // double angle = Math.toDegrees(Math.atan2(targetPose.getY()-robotPose.getY(), targetPose.getX()-robotPose.getX()));
-    // angle = Math.IEEEremainder(angle, 180);
-    // SmartDashboard.putNumber("Target Angle", angle);
-    // SmartDashboard.putNumber("Current Rotation", drivetrain.getPose().getRotation().getDegrees());
-
-    drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get(), drivetrain.getHeading()));
-    //drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), controller.calculate(drivetrain.getPose().getRotation().getDegrees(), angle) - turnSpeed.get(), drivetrain.getHeading()));
-  }
+    if (fieldOriented.get())
+      drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get(), drivetrain.getHeading()));
+    else
+      drivetrain.driveChassisSpeeds(new ChassisSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get()));
+    }
 }

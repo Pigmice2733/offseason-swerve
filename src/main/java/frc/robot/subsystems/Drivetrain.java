@@ -45,34 +45,10 @@ public class Drivetrain extends SubsystemBase {
   private SwerveModuleState[] states = new SwerveModuleState[4];
   
   public Drivetrain() {
-  frontLeftModule = 
-  new MkSwerveModuleBuilder().withGearRatio(SdsModuleConfigurations.MK4I_L2)
-                .withDriveMotor(MotorType.NEO, 10)
-                .withSteerMotor(MotorType.NEO, 11)
-                .withSteerEncoderPort(20)
-                .withSteerOffset(Math.toRadians(290))
-                .build();
-  frontRightModule = 
-  new MkSwerveModuleBuilder().withGearRatio(SdsModuleConfigurations.MK4I_L2)
-                .withDriveMotor(MotorType.NEO, 13)
-                .withSteerMotor(MotorType.NEO, 12)
-                .withSteerEncoderPort(22)
-                .withSteerOffset(Math.toRadians(319))
-                .build();
-  backLeftModule =
-  new MkSwerveModuleBuilder().withGearRatio(SdsModuleConfigurations.MK4I_L2)
-                .withDriveMotor(MotorType.NEO, 17)
-                .withSteerMotor(MotorType.NEO, 16)
-                .withSteerEncoderPort(26)
-                .withSteerOffset(Math.toRadians(131+180))
-                .build();
-  backRightModule =
-  new MkSwerveModuleBuilder().withGearRatio(SdsModuleConfigurations.MK4I_L2)
-                .withDriveMotor(MotorType.NEO, 14)
-                .withSteerMotor(MotorType.NEO, 15)
-                .withSteerEncoderPort(24)
-                .withSteerOffset(Math.toRadians(252))
-                .build();
+    frontLeftModule = DrivetrainConfig.FRONT_LEFT_MODULE.build();
+    frontRightModule = DrivetrainConfig.FRONT_RIGHT_MODULE.build();
+    backLeftModule = DrivetrainConfig.BACK_LEFT_MODULE.build();
+    backRightModule = DrivetrainConfig.BACK_RIGHT_MODULE.build();
 
     states = DrivetrainConfig.kinematics.toSwerveModuleStates(new ChassisSpeeds());
     SwerveModulePosition[] positions = {new SwerveModulePosition(), new SwerveModulePosition(), new SwerveModulePosition(), new SwerveModulePosition() };
@@ -112,20 +88,10 @@ public class Drivetrain extends SubsystemBase {
 
   public SwerveModulePosition[] getModulePositions() {
     SwerveModulePosition[] positions = {
-      new SwerveModulePosition(-frontLeftModule.getDriveDistance(), new Rotation2d(frontLeftModule.getSteerAngle())),
-      new SwerveModulePosition(-frontRightModule.getDriveDistance(), new Rotation2d(frontRightModule.getSteerAngle())),
+      new SwerveModulePosition(frontLeftModule.getDriveDistance(), new Rotation2d(frontLeftModule.getSteerAngle())),
+      new SwerveModulePosition(frontRightModule.getDriveDistance(), new Rotation2d(frontRightModule.getSteerAngle())),
       new SwerveModulePosition(backLeftModule.getDriveDistance(), new Rotation2d(backLeftModule.getSteerAngle())),
       new SwerveModulePosition(backRightModule.getDriveDistance(), new Rotation2d(backRightModule.getSteerAngle()))
-    };
-    return positions;
-  }
-
-  public SwerveModuleState[] getModuleStates() {
-    SwerveModuleState[] positions = {
-      new SwerveModuleState(frontLeftModule.getDriveVelocity(), new Rotation2d(frontLeftModule.getSteerAngle())),
-      new SwerveModuleState(frontRightModule.getDriveVelocity(), new Rotation2d(frontRightModule.getSteerAngle())),
-      new SwerveModuleState(backLeftModule.getDriveVelocity(), new Rotation2d(backLeftModule.getSteerAngle())),
-      new SwerveModuleState(backRightModule.getDriveVelocity(), new Rotation2d(backRightModule.getSteerAngle()))
     };
     return positions;
   }

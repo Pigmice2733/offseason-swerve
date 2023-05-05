@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
+import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -50,5 +54,45 @@ public final class Constants {
         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
             Math.hypot(TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2);
         public static final double MAX_VOLTAGE = 12.0;
+
+    public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
+        .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Left Module", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(0, 0))
+        .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+        .withDriveMotor(MotorType.NEO, 10)
+        .withSteerMotor(MotorType.NEO, 11)
+        .withSteerEncoderPort(20)
+        .withSteerOffset(-Math.toRadians(290));
+
+        public static final MkSwerveModuleBuilder FRONT_RIGHT_MODULE = new MkSwerveModuleBuilder()
+      .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Right Module", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(0, 0))
+      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+      .withDriveMotor(MotorType.NEO, 13)
+      .withSteerMotor(MotorType.NEO, 12)
+      .withSteerEncoderPort(22)
+      .withSteerOffset(-Math.toRadians(319));
+
+      public static final MkSwerveModuleBuilder BACK_LEFT_MODULE = new MkSwerveModuleBuilder()
+      .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Back Left Module", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(0, 0))
+      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+      .withDriveMotor(MotorType.NEO, 17)
+      .withSteerMotor(MotorType.NEO, 16)
+      .withSteerEncoderPort(26)
+      .withSteerOffset(-Math.toRadians(312));
+
+      public static final MkSwerveModuleBuilder BACK_RIGHT_MODULE = new MkSwerveModuleBuilder()
+      .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Back Right Module", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(0, 0))
+      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+      .withDriveMotor(MotorType.NEO, 14)
+      .withSteerMotor(MotorType.NEO, 15)
+      .withSteerEncoderPort(24)
+      .withSteerOffset(-Math.toRadians(252));
     }
 }
