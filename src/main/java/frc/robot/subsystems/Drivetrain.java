@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivetrainConfig;
 
 public class Drivetrain extends SubsystemBase {
   ShuffleboardTab drivetrainTab = Shuffleboard.getTab("Drivetrain");
@@ -63,49 +64,10 @@ public class Drivetrain extends SubsystemBase {
   private SwerveModuleState[] states = new SwerveModuleState[4];
   
   public Drivetrain() {
-    frontLeftModule = new MkSwerveModuleBuilder()
-    .withLayout(drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
-      .withSize(2, 4)
-      .withPosition(0, 0))
-    .withGearRatio(SdsModuleConfigurations.MK4I_L2)
-    .withDriveMotor(MotorType.NEO, 10)
-    .withSteerMotor(MotorType.NEO, 11)
-    .withSteerEncoderPort(20)
-    .withSteerOffset(-Math.toRadians(290))
-    .build();
-
-    frontRightModule = new MkSwerveModuleBuilder()
-      .withLayout(drivetrainTab.getLayout("Front Right Module", BuiltInLayouts.kList)
-        .withSize(2, 4)
-        .withPosition(0, 0))
-      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
-      .withDriveMotor(MotorType.NEO, 13)
-      .withSteerMotor(MotorType.NEO, 12)
-      .withSteerEncoderPort(22)
-      .withSteerOffset(-Math.toRadians(319))
-      .build();
-
-    backLeftModule = new MkSwerveModuleBuilder()
-      .withLayout(drivetrainTab.getLayout("Back Left Module", BuiltInLayouts.kList)
-        .withSize(2, 4)
-        .withPosition(0, 0))
-      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
-      .withDriveMotor(MotorType.NEO, 17)
-      .withSteerMotor(MotorType.NEO, 16)
-      .withSteerEncoderPort(26)
-      .withSteerOffset(-Math.toRadians(131+180))
-      .build();
-
-    backRightModule = new MkSwerveModuleBuilder()
-      .withLayout(drivetrainTab.getLayout("Back Right Module", BuiltInLayouts.kList)
-        .withSize(2, 4)
-        .withPosition(0, 0))
-      .withGearRatio(SdsModuleConfigurations.MK4I_L2)
-      .withDriveMotor(MotorType.NEO, 14)
-      .withSteerMotor(MotorType.NEO, 15)
-      .withSteerEncoderPort(24)
-      .withSteerOffset(-Math.toRadians(252))
-      .build();
+    frontLeftModule = DrivetrainConfig.FRONT_LEFT_MODULE.build();
+    frontRightModule = DrivetrainConfig.FRONT_RIGHT_MODULE.build();
+    backLeftModule = DrivetrainConfig.BACK_LEFT_MODULE.build();
+    backRightModule = DrivetrainConfig.BACK_RIGHT_MODULE.build();
 
     // frontRightModule.getDriveMotor().setInverted(false);
     // backLeftModule.getDriveMotor().setInverted(false);

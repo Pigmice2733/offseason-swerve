@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveWithJoysticks extends CommandBase {
-  public final Drivetrain drivetrain;
-  public final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
+  private final Drivetrain drivetrain;
+  private final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
 
   public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY, Supplier<Double> turnSpeed) {
     this.drivetrain = drivetrain;
@@ -25,6 +25,6 @@ public class DriveWithJoysticks extends CommandBase {
 
   @Override
   public void execute() {
-    drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), turnSpeed.get(), drivetrain.getHeading()));
+    drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get(), drivetrain.getHeading()));
   }
 }

@@ -6,6 +6,12 @@ package frc.robot;
 
 import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
+import com.swervedrivespecialties.swervelib.MotorType;
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -33,48 +39,44 @@ public final class Constants {
         public static final double DRIVE_SPEED = 2;
         public static final double TURN_SPEED = 2.5;
 
-    MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
-        .withLayout(drivetrainTab.getLayout("Front Left Module", BuiltInLayouts.kList)
+    public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
+        .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Left Module", BuiltInLayouts.kList)
         .withSize(2, 4)
         .withPosition(0, 0))
         .withGearRatio(SdsModuleConfigurations.MK4I_L2)
         .withDriveMotor(MotorType.NEO, 10)
         .withSteerMotor(MotorType.NEO, 11)
         .withSteerEncoderPort(20)
-        .withSteerOffset(-Math.toRadians(290))
-        .build();
+        .withSteerOffset(-Math.toRadians(290));
 
-    frontRightModule = new MkSwerveModuleBuilder()
-      .withLayout(drivetrainTab.getLayout("Front Right Module", BuiltInLayouts.kList)
+        public static final MkSwerveModuleBuilder FRONT_RIGHT_MODULE = new MkSwerveModuleBuilder()
+      .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Right Module", BuiltInLayouts.kList)
         .withSize(2, 4)
         .withPosition(0, 0))
       .withGearRatio(SdsModuleConfigurations.MK4I_L2)
       .withDriveMotor(MotorType.NEO, 13)
       .withSteerMotor(MotorType.NEO, 12)
       .withSteerEncoderPort(22)
-      .withSteerOffset(-Math.toRadians(319))
-      .build();
+      .withSteerOffset(-Math.toRadians(319));
 
-    backLeftModule = new MkSwerveModuleBuilder()
-      .withLayout(drivetrainTab.getLayout("Back Left Module", BuiltInLayouts.kList)
+      public static final MkSwerveModuleBuilder BACK_LEFT_MODULE = new MkSwerveModuleBuilder()
+      .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Back Left Module", BuiltInLayouts.kList)
         .withSize(2, 4)
         .withPosition(0, 0))
       .withGearRatio(SdsModuleConfigurations.MK4I_L2)
       .withDriveMotor(MotorType.NEO, 17)
       .withSteerMotor(MotorType.NEO, 16)
       .withSteerEncoderPort(26)
-      .withSteerOffset(-Math.toRadians(131+180))
-      .build();
+      .withSteerOffset(-Math.toRadians(312));
 
-    backRightModule = new MkSwerveModuleBuilder()
-      .withLayout(drivetrainTab.getLayout("Back Right Module", BuiltInLayouts.kList)
+      public static final MkSwerveModuleBuilder BACK_RIGHT_MODULE = new MkSwerveModuleBuilder()
+      .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Back Right Module", BuiltInLayouts.kList)
         .withSize(2, 4)
         .withPosition(0, 0))
       .withGearRatio(SdsModuleConfigurations.MK4I_L2)
       .withDriveMotor(MotorType.NEO, 14)
       .withSteerMotor(MotorType.NEO, 15)
       .withSteerEncoderPort(24)
-      .withSteerOffset(-Math.toRadians(252))
-      .build();
+      .withSteerOffset(-Math.toRadians(252));
     }
 }
