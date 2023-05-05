@@ -36,8 +36,8 @@ public final class Constants {
     }
 
     public final static class DrivetrainConfig {
-        public static final double DRIVE_SPEED = 2;
-        public static final double TURN_SPEED = 2.5;
+        public static final double DRIVE_SPEED = 2.5;
+        public static final double TURN_SPEED = 4;
 
     public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
         .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Left Module", BuiltInLayouts.kList)

@@ -6,6 +6,8 @@ package frc.robot.commands.Drivetrain;
 
 import java.util.function.Supplier;
 
+import javax.swing.text.html.HTMLDocument.BlockElement;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
@@ -13,18 +15,23 @@ import frc.robot.subsystems.Drivetrain;
 public class DriveWithJoysticks extends CommandBase {
   private final Drivetrain drivetrain;
   private final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
+  private final Supplier<Boolean> fieldOriented;
 
-  public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY, Supplier<Double> turnSpeed) {
+  public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY, Supplier<Double> turnSpeed, Supplier<Boolean> fieldOriented) {
     this.drivetrain = drivetrain;
     this.driveSpeedX = driveSpeedX;
     this.driveSpeedY = driveSpeedY;
     this.turnSpeed = turnSpeed;
+    this.fieldOriented = fieldOriented;
 
     addRequirements(drivetrain);
   }
 
   @Override
   public void execute() {
-    drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get(), drivetrain.getHeading()));
-  }
+    if (fieldOriented.get())
+      drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get(), drivetrain.getHeading()));
+    else
+      drivetrain.driveChassisSpeeds(new ChassisSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get()));
+    }
 }
