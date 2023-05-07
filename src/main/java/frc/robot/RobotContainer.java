@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.DrivetrainConfig;
 import frc.robot.commands.Drivetrain.DriveFacingPosition;
 import frc.robot.commands.Drivetrain.DriveWithJoysticks;
 import frc.robot.subsystems.Drivetrain;
@@ -66,7 +67,7 @@ public class RobotContainer {
 
     return new PPSwerveControllerCommand(
         traj,
-        drivetrain::getPose, drivetrain.getKinematics(), 
+        drivetrain::getPose, DrivetrainConfig.kinematics, 
         new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
         new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
         new PIDController(0, 0, 0), (output) -> drivetrain.driveModuleStates(output), drivetrain);
