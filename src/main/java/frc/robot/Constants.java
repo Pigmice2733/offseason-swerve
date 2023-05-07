@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -59,6 +60,8 @@ public final class Constants {
         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
             Math.hypot(TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2);
         public static final double MAX_VOLTAGE = 12.0;
+
+        public static final PathConstraints pathConstraints = new PathConstraints(1.0, 1.5);
 
         public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
             .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Left Module", BuiltInLayouts.kList)
