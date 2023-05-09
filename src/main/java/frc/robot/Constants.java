@@ -42,8 +42,8 @@ public final class Constants {
     }
 
     public final static class DrivetrainConfig {
-        public static final double MAX_DRIVE_SPEED = 2; // max meters / second
-        public static final double MAX_TURN_SPEED = 2.5; // max radians / second
+        public static final double MAX_DRIVE_SPEED = 2.5; // max meters / second
+        public static final double MAX_TURN_SPEED = 4; // max radians / second
 
         public static final double TRACK_WIDTH_METERS = 0.5842; // distance from the center of one wheel to another (meters)
         public final static SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
@@ -61,7 +61,7 @@ public final class Constants {
             Math.hypot(TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2);
         public static final double MAX_VOLTAGE = 12.0;
 
-        public static final PathConstraints pathConstraints = new PathConstraints(1.0, 1.5);
+        public static final PathConstraints pathConstraints = new PathConstraints(2, 2);
 
         public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
             .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Left Module", BuiltInLayouts.kList)
