@@ -1,4 +1,4 @@
-package frc.robot.commands.drivetrain;
+package frc.robot.commands.drivetrain.path_following;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -25,7 +25,7 @@ public class FollowPath extends SequentialCommandGroup {
      */
     public FollowPath(Drivetrain drivetrain, PathPlannerTrajectory trajectory) {
         addCommands(
-            drivetrain.resetOdometryCommand(trajectory.getInitialPose()),
+            drivetrain.resetOdometryCommand(trajectory.getInitialHolonomicPose()),
             new PPSwerveControllerCommand(
                 trajectory,
                 drivetrain::getPose,
@@ -42,7 +42,7 @@ public class FollowPath extends SequentialCommandGroup {
 
     public FollowPath(Drivetrain drivetrain, PathPlannerTrajectory trajectory, HashMap<String, Command> eventMap) {
         addCommands(
-            drivetrain.resetOdometryCommand(trajectory.getInitialPose()),
+            drivetrain.resetOdometryCommand(trajectory.getInitialHolonomicPose()),
             new FollowPathWithEvents(
                 new PPSwerveControllerCommand(
                     trajectory,
@@ -67,7 +67,8 @@ public class FollowPath extends SequentialCommandGroup {
      * and a trajectory configuration.
      * 
      * @param drivetrain a drivetrain subsystem
-     * @param pathName   the name of a premade path to follow
+     * @param pathName the name of a premade path to follow
+     * @param reversed reverse the robots direction
      */
     public FollowPath(Drivetrain drivetrain, String pathName, boolean reversed) {
         this(

@@ -10,8 +10,10 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DrivetrainConfig;
 import frc.robot.commands.drivetrain.DriveFacingPosition;
 import frc.robot.commands.drivetrain.DriveWithJoysticks;
+import frc.robot.commands.drivetrain.path_following.DriveToPoint;
+import frc.robot.commands.drivetrain.path_following.FollowPath;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -49,7 +53,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(driver, Button.kX.value).onTrue(new InstantCommand(() -> drivetrain.resetOdometry()));
-    new JoystickButton(driver, Button.kA.value).whileTrue(new DriveFacingPosition(drivetrain, controls::getDriveSpeedX, controls::getDriveSpeedY, new Translation2d(2, 0)));
+    new JoystickButton(driver, Button.kA.value).whileTrue(new DriveFacingPosition(drivetrain, controls::getDriveSpeedX, controls::getDriveSpeedY, new Translation2d(0, 0)));
+    new JoystickButton(driver, Button.kY.value).whileTrue(new DriveToPoint(drivetrain, new Pose2d()));
   }
 
   /**
@@ -58,18 +63,19 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    drivetrain.resetOdometry();
-    PathPlannerTrajectory traj = PathPlanner.loadPath(
-      "New Path",
-      new PathConstraints(1.0, 1.5));
+  //   drivetrain.resetOdometry();
+  //   PathPlannerTrajectory traj = PathPlanner.loadPath(
+  //     "New Path",
+  //     new PathConstraints(1.0, 1.5));
 
-      drivetrain.resetOdometry(traj.getInitialHolonomicPose());
+  //     drivetrain.resetOdometry(traj.getInitialHolonomicPose());
 
-    return new PPSwerveControllerCommand(
-        traj,
-        drivetrain::getPose, DrivetrainConfig.kinematics, 
-        new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-        new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-        new PIDController(0, 0, 0), (output) -> drivetrain.driveModuleStates(output), drivetrain);
+  //   return new PPSwerveControllerCommand(
+  //       traj,
+  //       drivetrain::getPose, DrivetrainConfig.kinematics, 
+  //       new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+  //       new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+  //       new PIDController(0, 0, 0), (output) -> drivetrain.driveModuleStates(output), drivetrain);
+    return new FollowPath(drivetrain, "New New Path", false);
   }
 }

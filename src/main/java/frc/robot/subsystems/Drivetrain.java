@@ -30,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   private final AHRS gyro = new AHRS();
   private final SwerveDriveOdometry odometry;
 
-  private Pose2d pose;
+  private Pose2d pose = new Pose2d();
   private SwerveModuleState[] states = new SwerveModuleState[4];
   
   public Drivetrain() {
@@ -48,7 +48,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void updateShuffleboard() {
-    SmartDashboard.putNumber("Drivetrain Yaw", gyro.getAngle());
+    SmartDashboard.putNumber("Drivetrain Yaw", getHeading().getDegrees());
     SmartDashboard.putNumber("Angle", getHeading().getDegrees());
     SmartDashboard.putNumber("Pose X", pose.getX());
     SmartDashboard.putNumber("Pose Y", pose.getY());
@@ -105,8 +105,9 @@ public class Drivetrain extends SubsystemBase {
 
   /** @param pose a pose to set the odometry and gyro to */
   public void resetOdometry(Pose2d pose) {
+    System.out.println("Reset Odometry to: " + pose);
     gyro.reset();
-    gyro.setAngleAdjustment(pose.getRotation().getDegrees());
+    gyro.setAngleAdjustment(-pose.getRotation().getDegrees());
     odometry.resetPosition(getHeading(), getModulePositions(), pose);
   }
 
