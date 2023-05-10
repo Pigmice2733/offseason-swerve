@@ -9,6 +9,7 @@ import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -53,7 +54,11 @@ public final class Constants {
             new Translation2d(-TRACK_WIDTH_METERS/2, -TRACK_WIDTH_METERS/2) // Back right
         );
 
-        // Default values from example project
+        // Constants found in Sysid (volts)
+        public static final SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(0, 0, 0);
+
+
+        // Default values from example project TODO: replace with feed forward
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
             SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;

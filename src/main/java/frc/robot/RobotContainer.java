@@ -76,6 +76,6 @@ public class RobotContainer {
   //       new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
   //       new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
   //       new PIDController(0, 0, 0), (output) -> drivetrain.driveModuleStates(output), drivetrain);
-    return new FollowPath(drivetrain, "New New Path", false);
+    return new FollowPath(drivetrain, "New Path", false);
   }
 }
