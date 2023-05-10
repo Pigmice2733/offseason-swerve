@@ -48,13 +48,15 @@ public class DriveToPoint extends CommandBase {
     public static PathPlannerTrajectory generateTrajectory(Drivetrain drivetrain, Pose2d targetPose) {
         Pose2d currentPose = drivetrain.getPose();
 
+        // Angle facing the end point when at the current point
         Rotation2d angleToEnd = Rotation2d.fromRadians(Math.atan2(targetPose.getY() - currentPose.getY(),
             targetPose.getX() - currentPose.getX()));
+
+        // Angle facing the current point when at the end point
         Rotation2d angleToStart = Rotation2d.fromDegrees(angleToEnd.getDegrees() + 180);
         
         PathPoint currentPoint = new PathPoint(currentPose.getTranslation(), angleToEnd, currentPose.getRotation());
-        PathPoint endPoint = new PathPoint(targetPose.getTranslation(),
-            angleToStart, targetPose.getRotation());
+        PathPoint endPoint = new PathPoint(targetPose.getTranslation(), angleToStart, targetPose.getRotation());
         
         return PathPlanner.generatePath(DrivetrainConfig.pathConstraints, List.of(currentPoint, endPoint));
   }

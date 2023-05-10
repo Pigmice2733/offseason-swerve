@@ -34,6 +34,7 @@ public class DriveFacingPosition extends CommandBase {
 
     double angle = Math.toDegrees(Math.atan2(targetPos.getY()-robotPose.getY(), targetPos.getX()-robotPose.getX()));
     double radPerSec = controller.calculate(drivetrain.getPose().getRotation().getDegrees(), angle);
+    
     drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), radPerSec, drivetrain.getHeading()));
   }
 }

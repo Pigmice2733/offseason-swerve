@@ -16,9 +16,7 @@ import frc.robot.subsystems.Drivetrain;
 public class FollowPath extends SequentialCommandGroup {
 
     /**
-     * Use a RamseteController to follow a specified path.
-     * Call only from autonomous path-following commands that define a trajectory
-     * and a trajectory configuration.
+     * Use a SwerveController to follow a specified path.
      * 
      * @param drivetrain a drivetrain subsystem
      * @param trajectory a path-following trajectory
@@ -40,6 +38,12 @@ public class FollowPath extends SequentialCommandGroup {
         addRequirements(drivetrain);
     }
 
+    /**
+     * Use a SwerveController to follow a specified path.
+     * @param drivetrain a drivetrain subsystem
+     * @param trajectory a path-following trajectory
+     * @param eventMap commands to execute at certain events along the path (configure events in Path Planner)
+     */
     public FollowPath(Drivetrain drivetrain, PathPlannerTrajectory trajectory, HashMap<String, Command> eventMap) {
         addCommands(
             drivetrain.resetOdometryCommand(trajectory.getInitialHolonomicPose()),
@@ -62,9 +66,7 @@ public class FollowPath extends SequentialCommandGroup {
     }
 
     /**
-     * Use a RamseteController to follow a specified path.
-     * Call only from autonomous path-following commands that define a trajectory
-     * and a trajectory configuration.
+     * Use a SwerveController to follow a specified path.
      * 
      * @param drivetrain a drivetrain subsystem
      * @param pathName the name of a premade path to follow
@@ -79,6 +81,14 @@ public class FollowPath extends SequentialCommandGroup {
                         reversed));
     }
 
+    /**
+     * Use a SwerveController to follow a specified path.
+     * 
+     * @param drivetrain a drivetrain subsystem
+     * @param pathName the name of a premade path to follow
+     * @param eventMap commands to execute at certain events along the path (configure events in Path Planner)
+     * @param reversed reverse the robots direction
+     */
     public FollowPath(Drivetrain drivetrain, String pathName, HashMap<String, Command> eventMap, boolean reversed) {
         this(
                 drivetrain,
