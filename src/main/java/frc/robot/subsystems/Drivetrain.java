@@ -8,7 +8,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -20,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ShuffleboardHelper;
 import frc.robot.Constants.DrivetrainConfig;
 
 public class Drivetrain extends SubsystemBase {
@@ -32,6 +32,8 @@ public class Drivetrain extends SubsystemBase {
     private final SwerveDriveOdometry odometry;
 
     private Pose2d pose = new Pose2d();
+
+    private ChassisSpeeds targetSpeeds = new ChassisSpeeds();
     private SwerveModuleState[] states = new SwerveModuleState[4];
 
     public Drivetrain() {
@@ -39,21 +41,20 @@ public class Drivetrain extends SubsystemBase {
         odometry = new SwerveDriveOdometry(DrivetrainConfig.kinematics, new Rotation2d(), getModulePositions());
 
         resetOdometry();
+
+        ShuffleboardHelper.drivetrainTab.add("Heading", gyro).withPosition(4, 0);
+        ShuffleboardHelper.addOutput("Pose X", ShuffleboardHelper.drivetrainTab, () -> pose.getX()).withPosition(4, 2);
+        ShuffleboardHelper.addOutput("Pose Y", ShuffleboardHelper.drivetrainTab, () -> pose.getY()).withPosition(5, 2);
+
+        ShuffleboardHelper.addOutput("Target vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.vxMetersPerSecond).withPosition(0, 3);
+        ShuffleboardHelper.addOutput("Target Y vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.vyMetersPerSecond).withPosition(1, 3);
+        ShuffleboardHelper.addOutput("Target Rot. vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.omegaRadiansPerSecond).withPosition(2, 3);
     }
 
     @Override
     public void periodic() {
         applyModuleStates();
-        updateShuffleboard();
         pose = odometry.update(getHeading(), getModulePositions());
-    }
-
-    private void updateShuffleboard() {
-        SmartDashboard.putNumber("Drivetrain Yaw", getHeading().getDegrees());
-        SmartDashboard.putNumber("Angle", getHeading().getDegrees());
-        SmartDashboard.putNumber("Pose X", pose.getX());
-        SmartDashboard.putNumber("Pose Y", pose.getY());
-        SmartDashboard.putNumber("Pose Rotation", pose.getRotation().getDegrees());
     }
 
     /** Apply the current target swerve module states */
@@ -75,6 +76,7 @@ public class Drivetrain extends SubsystemBase {
 
     /** @param speeds set target swerve module states based on a ChassisSpeed */
     public void driveChassisSpeeds(ChassisSpeeds speeds) {
+        targetSpeeds = speeds;
         SmartDashboard.putNumber("Target X (m/s)", speeds.vxMetersPerSecond);
         SmartDashboard.putNumber("Target Y m/s", speeds.vyMetersPerSecond);
         SmartDashboard.putNumber("Target Rotation (rad/sec)", speeds.omegaRadiansPerSecond);
@@ -83,6 +85,7 @@ public class Drivetrain extends SubsystemBase {
 
     /** @param states set target swerve module states */
     public void driveModuleStates(SwerveModuleState[] states) {
+        targetSpeeds = DrivetrainConfig.kinematics.toChassisSpeeds(states);
         this.states = states;
     }
 
