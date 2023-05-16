@@ -77,7 +77,7 @@ public class FollowPath extends SequentialCommandGroup {
                 drivetrain,
                 PathPlanner.loadPath(
                         pathName,
-                        DrivetrainConfig.pathConstraints,
+                        DrivetrainConfig.PATH_CONSTRAINTS,
                         reversed));
     }
 
@@ -94,7 +94,7 @@ public class FollowPath extends SequentialCommandGroup {
                 drivetrain,
                 PathPlanner.loadPath(
                         pathName,
-                        DrivetrainConfig.pathConstraints,
+                        DrivetrainConfig.PATH_CONSTRAINTS,
                         reversed),
                 eventMap);
     }

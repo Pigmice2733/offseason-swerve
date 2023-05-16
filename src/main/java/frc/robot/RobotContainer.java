@@ -12,6 +12,7 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.drivetrain.DriveChassisSpeeds;
 import frc.robot.commands.drivetrain.DriveFacingPosition;
 import frc.robot.commands.drivetrain.DriveWithJoysticks;
 import frc.robot.commands.drivetrain.path_following.DriveToPoint;
@@ -63,6 +65,9 @@ public class RobotContainer {
         new JoystickButton(driver, Button.kA.value).whileTrue(new DriveFacingPosition(drivetrain,
                 controls::getDriveSpeedX, controls::getDriveSpeedY, new Translation2d(0, 0)));
         new JoystickButton(driver, Button.kY.value).whileTrue(new DriveToPoint(drivetrain, new Pose2d(), driver));
+
+        new JoystickButton(driver, Button.kB.value).whileTrue(new DriveChassisSpeeds(drivetrain, new ChassisSpeeds(1, 0, Math.PI)));
+
     }
 
     public void stopControllerRumble() {
@@ -76,6 +81,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FollowPath(drivetrain, "New Path", false);
+        return new FollowPath(drivetrain, "New New Path", false);
     }
 }

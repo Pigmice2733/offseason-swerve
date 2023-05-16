@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.PathConstraints;
+import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -55,8 +56,7 @@ public final class Constants {
         );
 
         // Constants found in Sysid (volts)
-        public static final SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(0, 0, 0);
-
+        public static final SimpleMotorFeedforward DRIVE_FEED_FORWARD = new SimpleMotorFeedforward(0.35493, 2.3014, 0.12872);
 
         // Default values from example project TODO: replace with feed forward
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
@@ -66,7 +66,7 @@ public final class Constants {
             Math.hypot(TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2);
         public static final double MAX_VOLTAGE = 12.0;
 
-        public static final PathConstraints pathConstraints = new PathConstraints(2, 2);
+        public static final PathConstraints PATH_CONSTRAINTS = new PathConstraints(2, 2);
 
         public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
             .withLayout(ShuffleboardHelper.drivetrainTab.getLayout("Front Left", BuiltInLayouts.kList)

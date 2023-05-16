@@ -65,6 +65,6 @@ public class DriveToPoint extends CommandBase {
         PathPoint currentPoint = new PathPoint(currentPose.getTranslation(), angleToEnd, currentPose.getRotation());
         PathPoint endPoint = new PathPoint(targetPose.getTranslation(), angleToStart, targetPose.getRotation());
         
-        return PathPlanner.generatePath(DrivetrainConfig.pathConstraints, List.of(currentPoint, endPoint));
+        return PathPlanner.generatePath(DrivetrainConfig.PATH_CONSTRAINTS, List.of(currentPoint, endPoint));
   }
 }
