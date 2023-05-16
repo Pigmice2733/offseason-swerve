@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -55,6 +56,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Pose Rotation", pose.getRotation().getDegrees());
   }
 
+  SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(0, 1, 0);
   /** Apply the current target swerve module states*/
   private void applyModuleStates() {
     if (states == null)
@@ -62,10 +64,10 @@ public class Drivetrain extends SubsystemBase {
 
     SwerveDriveKinematics.desaturateWheelSpeeds(states, DrivetrainConfig.MAX_VELOCITY_METERS_PER_SECOND);
 
-    frontLeftModule.set(states[0].speedMetersPerSecond / DrivetrainConfig.MAX_VELOCITY_METERS_PER_SECOND * DrivetrainConfig.MAX_VOLTAGE, states[0].angle.getRadians());
-    frontRightModule.set(states[1].speedMetersPerSecond / DrivetrainConfig.MAX_VELOCITY_METERS_PER_SECOND * DrivetrainConfig.MAX_VOLTAGE, states[1].angle.getRadians());
-    backLeftModule.set(states[2].speedMetersPerSecond / DrivetrainConfig.MAX_VELOCITY_METERS_PER_SECOND * DrivetrainConfig.MAX_VOLTAGE, states[2].angle.getRadians());
-    backRightModule.set(states[3].speedMetersPerSecond / DrivetrainConfig.MAX_VELOCITY_METERS_PER_SECOND * DrivetrainConfig.MAX_VOLTAGE, states[3].angle.getRadians());
+    frontLeftModule.set(feedForward.calculate(states[0].speedMetersPerSecond), states[0].angle.getRadians());
+    frontRightModule.set(feedForward.calculate(states[1].speedMetersPerSecond), states[1].angle.getRadians());
+    backLeftModule.set(feedForward.calculate(states[2].speedMetersPerSecond), states[2].angle.getRadians());
+    backRightModule.set(feedForward.calculate(states[3].speedMetersPerSecond), states[3].angle.getRadians());
   }
 
   /** @param speeds set target swerve module states based on a ChassisSpeed */
