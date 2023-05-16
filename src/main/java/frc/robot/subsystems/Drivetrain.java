@@ -47,13 +47,19 @@ public class Drivetrain extends SubsystemBase {
         ShuffleboardHelper.addOutput("Pose X", ShuffleboardHelper.drivetrainTab, () -> pose.getX()).withPosition(4, 2);
         ShuffleboardHelper.addOutput("Pose Y", ShuffleboardHelper.drivetrainTab, () -> pose.getY()).withPosition(5, 2);
 
-        ShuffleboardHelper.addOutput("Target X vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.vxMetersPerSecond).withPosition(0, 3);
-        ShuffleboardHelper.addOutput("Target Y vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.vyMetersPerSecond).withPosition(1, 3);
-        ShuffleboardHelper.addOutput("Target Rot. vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.omegaRadiansPerSecond).withPosition(2, 3);
-    
+        ShuffleboardHelper
+                .addOutput("Target X vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.vxMetersPerSecond)
+                .withPosition(0, 3);
+        ShuffleboardHelper
+                .addOutput("Target Y vel", ShuffleboardHelper.drivetrainTab, () -> targetSpeeds.vyMetersPerSecond)
+                .withPosition(1, 3);
+        ShuffleboardHelper.addOutput("Target Rot. vel", ShuffleboardHelper.drivetrainTab,
+                () -> targetSpeeds.omegaRadiansPerSecond).withPosition(2, 3);
+
         ShuffleboardHelper.addOutput("Velocity X", ShuffleboardHelper.drivetrainTab, () -> gyro.getVelocityX());
         ShuffleboardHelper.addOutput("Velocity Y", ShuffleboardHelper.drivetrainTab, () -> gyro.getVelocityY());
-        ShuffleboardHelper.addOutput("Speed", ShuffleboardHelper.drivetrainTab, () -> Math.sqrt(Math.pow(gyro.getVelocityX(), 2) + Math.pow(gyro.getVelocityY(), 2)));
+        ShuffleboardHelper.addOutput("Speed", ShuffleboardHelper.drivetrainTab,
+                () -> Math.sqrt(Math.pow(gyro.getVelocityX(), 2) + Math.pow(gyro.getVelocityY(), 2)));
     }
 
     @Override
@@ -71,11 +77,11 @@ public class Drivetrain extends SubsystemBase {
 
         frontLeftModule.set(calculateFeedForward(states[0].speedMetersPerSecond),
                 states[0].angle.getRadians());
-        frontRightModule.set(calculateFeedForward(states[0].speedMetersPerSecond),
+        frontRightModule.set(calculateFeedForward(states[1].speedMetersPerSecond),
                 states[1].angle.getRadians());
-        backLeftModule.set(calculateFeedForward(states[0].speedMetersPerSecond),
+        backLeftModule.set(calculateFeedForward(states[2].speedMetersPerSecond),
                 states[2].angle.getRadians());
-        backRightModule.set(calculateFeedForward(states[0].speedMetersPerSecond),
+        backRightModule.set(calculateFeedForward(states[3].speedMetersPerSecond),
                 states[3].angle.getRadians());
     }
 
