@@ -5,10 +5,12 @@
 package frc.robot;
 
 import com.pathplanner.lib.PathConstraints;
+import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -53,7 +55,10 @@ public final class Constants {
             new Translation2d(-TRACK_WIDTH_METERS/2, -TRACK_WIDTH_METERS/2) // Back right
         );
 
-        // Default values from example project
+        // Constants found in Sysid (volts)
+        public static final SimpleMotorFeedforward DRIVE_FEED_FORWARD = new SimpleMotorFeedforward(0.35493, 2.3014, 0.12872);
+
+        // Default values from example project TODO: replace with feed forward
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
             SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
@@ -61,11 +66,11 @@ public final class Constants {
             Math.hypot(TRACK_WIDTH_METERS/2, TRACK_WIDTH_METERS/2);
         public static final double MAX_VOLTAGE = 12.0;
 
-        public static final PathConstraints pathConstraints = new PathConstraints(2, 2);
+        public static final PathConstraints PATH_CONSTRAINTS = new PathConstraints(2, 2);
 
         public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
-            .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Left Module", BuiltInLayouts.kList)
-                .withSize(2, 4)
+            .withLayout(ShuffleboardHelper.drivetrainTab.getLayout("Front Left", BuiltInLayouts.kList)
+                .withSize(1, 3)
                 .withPosition(0, 0))
             .withGearRatio(SdsModuleConfigurations.MK4I_L2)
             .withDriveMotor(MotorType.NEO, CANConfig.FRONT_LEFT_DRIVE)
@@ -74,9 +79,9 @@ public final class Constants {
             .withSteerOffset(-Math.toRadians(290));
 
         public static final MkSwerveModuleBuilder FRONT_RIGHT_MODULE = new MkSwerveModuleBuilder()
-            .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Front Right Module", BuiltInLayouts.kList)
-                .withSize(2, 4)
-                .withPosition(0, 0))
+            .withLayout(ShuffleboardHelper.drivetrainTab.getLayout("Front Right", BuiltInLayouts.kList)
+                .withSize(1, 3)
+                .withPosition(1, 0))
             .withGearRatio(SdsModuleConfigurations.MK4I_L2)
             .withDriveMotor(MotorType.NEO, CANConfig.FRONT_RIGHT_DRIVE)
             .withSteerMotor(MotorType.NEO, CANConfig.FRONT_RIGHT_STEER)
@@ -84,9 +89,9 @@ public final class Constants {
             .withSteerOffset(-Math.toRadians(319));
 
         public static final MkSwerveModuleBuilder BACK_LEFT_MODULE = new MkSwerveModuleBuilder()
-            .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Back Left Module", BuiltInLayouts.kList)
-                .withSize(2, 4)
-                .withPosition(0, 0))
+            .withLayout(ShuffleboardHelper.drivetrainTab.getLayout("Back Left", BuiltInLayouts.kList)
+                .withSize(1, 3)
+                .withPosition(2, 0))
             .withGearRatio(SdsModuleConfigurations.MK4I_L2)
             .withDriveMotor(MotorType.NEO, CANConfig.BACK_LEFT_DRIVE)
             .withSteerMotor(MotorType.NEO, CANConfig.BACK_LEFT_STEER)
@@ -94,9 +99,9 @@ public final class Constants {
             .withSteerOffset(-Math.toRadians(312));
 
         public static final MkSwerveModuleBuilder BACK_RIGHT_MODULE = new MkSwerveModuleBuilder()
-            .withLayout(Shuffleboard.getTab("Drivetrain").getLayout("Back Right Module", BuiltInLayouts.kList)
-                .withSize(2, 4)
-                .withPosition(0, 0))
+            .withLayout(ShuffleboardHelper.drivetrainTab.getLayout("Back Right", BuiltInLayouts.kList)
+                .withSize(1, 3)
+                .withPosition(3, 0))
             .withGearRatio(SdsModuleConfigurations.MK4I_L2)
             .withDriveMotor(MotorType.NEO, CANConfig.BACK_RIGHT_DRIVE)
             .withSteerMotor(MotorType.NEO, CANConfig.BACK_RIGHT_STEER)
