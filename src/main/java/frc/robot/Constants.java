@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.pathplanner.lib.PathConstraints;
-import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -14,7 +13,6 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -25,7 +23,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double AXIS_THRESHOLD = 0.1;
+    public static final double AXIS_THRESHOLD = 0.2;
 
     public final static class CANConfig {
         public static final int FRONT_LEFT_DRIVE = 10;

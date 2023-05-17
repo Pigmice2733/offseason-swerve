@@ -22,7 +22,7 @@ public class Controls {
     public double getDriveSpeedY() {
         double joystickValue = driver.getLeftY();
         joystickValue = MathUtil.applyDeadband(-joystickValue, threshold); // deals with stick drag
-        joystickValue = driveSpeedYFilter.calculate(joystickValue); // input smoothing
+        //joystickValue = driveSpeedYFilter.calculate(joystickValue); // input smoothing
 
         return joystickValue * DrivetrainConfig.MAX_DRIVE_SPEED;
     }
@@ -32,7 +32,7 @@ public class Controls {
     public double getDriveSpeedX() {
         double joystickValue = driver.getLeftX();
         joystickValue = MathUtil.applyDeadband(-joystickValue, threshold); // deals with stick drag
-        joystickValue = driveSpeedXFilter.calculate(joystickValue); // input smoothing
+        //joystickValue = driveSpeedXFilter.calculate(joystickValue); // input smoothing
 
         return joystickValue * DrivetrainConfig.MAX_DRIVE_SPEED;
     }
@@ -42,7 +42,7 @@ public class Controls {
     public double getTurnSpeed() {
         double joystickValue = driver.getRightX();
         joystickValue = MathUtil.applyDeadband(joystickValue, threshold); // deals with stick drag
-        joystickValue = turnSpeedFilter.calculate(joystickValue); // input smoothing
+        //joystickValue = turnSpeedFilter.calculate(joystickValue); // input smoothing
 
         return joystickValue * DrivetrainConfig.MAX_TURN_SPEED;
     }
