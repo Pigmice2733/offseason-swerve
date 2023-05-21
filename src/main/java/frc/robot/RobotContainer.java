@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -19,7 +20,9 @@ import frc.robot.commands.drivetrain.DriveFacingPosition;
 import frc.robot.commands.drivetrain.DriveWithJoysticks;
 import frc.robot.commands.drivetrain.path_following.DriveToPoint;
 import frc.robot.commands.drivetrain.path_following.FollowPath;
+import frc.robot.commands.drivetrain.path_following.PathfindToPoint;
 import frc.robot.commands.drivetrain.path_following.RetracePath;
+import frc.robot.pathfinder.Pathfinder;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -36,6 +39,7 @@ public class RobotContainer {
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
     private Controls controls = new Controls(driver, operator);
+    private Pathfinder pathfinder = new Pathfinder(0, "testing");
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -57,11 +61,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         new JoystickButton(driver, Button.kX.value).onTrue(new InstantCommand(() -> drivetrain.resetOdometry()));
-        new JoystickButton(driver, Button.kA.value).whileTrue(new DriveFacingPosition(drivetrain,
-                controls::getDriveSpeedX, controls::getDriveSpeedY, new Translation2d(0, 0)));
+        // new JoystickButton(driver, Button.kA.value).whileTrue(new DriveFacingPosition(drivetrain,
+        //         controls::getDriveSpeedX, controls::getDriveSpeedY, new Translation2d(0, 0)));
         new JoystickButton(driver, Button.kY.value).whileTrue(new DriveToPoint(drivetrain, new Pose2d(), driver));
 
         new JoystickButton(driver, Button.kB.value).whileTrue(new RetracePath(drivetrain));
+        new JoystickButton(driver, Button.kA.value).whileTrue(new PathfindToPoint(drivetrain, pathfinder, new Pose2d(2.5, 2.5, new Rotation2d())));
     }
 
     public void stopControllerRumble() {
