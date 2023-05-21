@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DrivetrainConfig;
 import frc.robot.commands.RumbleController;
@@ -40,7 +41,7 @@ public class DriveToPoint extends CommandBase {
     public void initialize() {
         pathCommand = new SequentialCommandGroup(
             new FollowPath(drivetrain, generateTrajectory(drivetrain, targetPose)),
-            new RumbleController(controllerToRumble, RumbleType.kBothRumble, 0.5, 0.75)
+            new InstantCommand(() -> controllerToRumble.setRumble(RumbleType.kBothRumble, 0.75))
         );
         CommandScheduler.getInstance().schedule(pathCommand);
     }
@@ -50,6 +51,7 @@ public class DriveToPoint extends CommandBase {
         if (pathCommand != null) {
             pathCommand.cancel();
         }
+        controllerToRumble.setRumble(RumbleType.kBothRumble, 0);
     }
 
     @Override
@@ -63,9 +65,6 @@ public class DriveToPoint extends CommandBase {
         // Angle facing the end point when at the current point
         Rotation2d angleToEnd = Rotation2d.fromRadians(Math.atan2(targetPose.getY() - currentPose.getY(),
             targetPose.getX() - currentPose.getX()));
-
-        // Angle facing the current point when at the end point
-        //Rotation2d angleToStart = Rotation2d.fromDegrees(angleToEnd.getDegrees() + 180);
         
         PathPoint currentPoint = new PathPoint(currentPose.getTranslation(), angleToEnd, currentPose.getRotation());
         PathPoint endPoint = new PathPoint(targetPose.getTranslation(), angleToEnd, targetPose.getRotation());

@@ -9,6 +9,7 @@ import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -65,6 +66,8 @@ public final class Constants {
         public static final double MAX_VOLTAGE = 12.0;
 
         public static final PathConstraints PATH_CONSTRAINTS = new PathConstraints(2, 2);
+        public static final PIDController PATH_DRIVE_PID = new PIDController(0.3, 0, 0); 
+        public static final PIDController PATH_TURN_PID = new PIDController(0.31, 0, 0); 
 
         public static final MkSwerveModuleBuilder FRONT_LEFT_MODULE = new MkSwerveModuleBuilder()
             .withLayout(ShuffleboardHelper.drivetrainTab.getLayout("Front Left", BuiltInLayouts.kList)

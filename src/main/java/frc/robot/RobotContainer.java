@@ -19,6 +19,7 @@ import frc.robot.commands.drivetrain.DriveFacingPosition;
 import frc.robot.commands.drivetrain.DriveWithJoysticks;
 import frc.robot.commands.drivetrain.path_following.DriveToPoint;
 import frc.robot.commands.drivetrain.path_following.FollowPath;
+import frc.robot.commands.drivetrain.path_following.RetracePath;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -60,8 +61,7 @@ public class RobotContainer {
                 controls::getDriveSpeedX, controls::getDriveSpeedY, new Translation2d(0, 0)));
         new JoystickButton(driver, Button.kY.value).whileTrue(new DriveToPoint(drivetrain, new Pose2d(), driver));
 
-        new JoystickButton(driver, Button.kB.value).whileTrue(new DriveChassisSpeeds(drivetrain, new ChassisSpeeds(1, 0, Math.PI)));
-
+        new JoystickButton(driver, Button.kB.value).whileTrue(new RetracePath(drivetrain));
     }
 
     public void stopControllerRumble() {

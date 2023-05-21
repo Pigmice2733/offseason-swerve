@@ -32,9 +32,9 @@ public class FollowPath extends SequentialCommandGroup {
                 trajectory,
                 drivetrain::getPose,
                 DrivetrainConfig.kinematics,
-                new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-                new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-                new PIDController(0, 0, 0), 
+                DrivetrainConfig.PATH_DRIVE_PID, // X controller
+                DrivetrainConfig.PATH_DRIVE_PID, // Y controller 
+                DrivetrainConfig.PATH_TURN_PID, // turn controller
                 (output) -> drivetrain.driveModuleStates(output), 
                 drivetrain
             ),
@@ -57,9 +57,9 @@ public class FollowPath extends SequentialCommandGroup {
                     trajectory,
                     drivetrain::getPose,
                     DrivetrainConfig.kinematics,
-                    new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-                    new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-                    new PIDController(0, 0, 0), 
+                    DrivetrainConfig.PATH_DRIVE_PID, // X controller
+                    DrivetrainConfig.PATH_DRIVE_PID, // Y controller 
+                    DrivetrainConfig.PATH_TURN_PID, // turn controller
                     (output) -> drivetrain.driveModuleStates(output), 
                     drivetrain
                 ),
