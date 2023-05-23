@@ -20,8 +20,9 @@ public class Pathfinder {
 
     public Pathfinder(double robotWidth, String distanceMapName) {
         BufferedImage image = null;
+        System.out.println(Filesystem.getDeployDirectory().toString() + "/" + distanceMapName + ".png");
         try {
-            image = ImageIO.read(new File(Filesystem.getDeployDirectory(), distanceMapName + "/capture.png"));
+            image = ImageIO.read(new File(Filesystem.getDeployDirectory(), "pathfinder/" + distanceMapName + ".png"));
         } catch (IOException e) {
         e.printStackTrace();
         }
@@ -32,14 +33,14 @@ public class Pathfinder {
         }
 
         this.robotWidth = robotWidth;
-        grid = new NodeGrid(new Translation2d(0, 0), new Translation2d(3, 3), image, this);
+        grid = new NodeGrid(new Translation2d(0, 0), new Translation2d(3, 3), robotWidth, image, this);
     }
 
     public PathfinderResult FindPath(Translation2d currentPos, Translation2d goalPos) {
         Node start = grid.FindCloseNode(currentPos);
         Node end = grid.FindCloseNode(goalPos);
 
-        if (!start.driveable || !end.driveable)
+        if (start == end || !start.driveable || !end.driveable)
             return new PathfinderResult(false, null, null);
 
         boolean pathFound = false;

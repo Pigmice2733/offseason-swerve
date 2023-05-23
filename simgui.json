@@ -1,8 +1,18 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "CANCoder[22]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/LiveWindow/Ungrouped/Scheduler": "Scheduler"
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/Drivetrain/Heading": "Gyro"
     }
   }
 }

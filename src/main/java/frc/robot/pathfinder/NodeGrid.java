@@ -20,11 +20,9 @@ public class NodeGrid {
 
     private Pathfinder pathfinder;
 
-    public NodeGrid(Translation2d botLeftBound, Translation2d topRightBound, BufferedImage distanceMap, Pathfinder pathfinder)
+    public NodeGrid(Translation2d botLeftBound, Translation2d topRightBound, double robotWidth, BufferedImage distanceMap, Pathfinder pathfinder)
     {
         this.pathfinder = pathfinder;
-
-        
 
         numNodesX = distanceMap.getWidth();
         numNodesY = distanceMap.getHeight();
@@ -43,7 +41,7 @@ public class NodeGrid {
             for (int y = 0; y < numNodesY; y++)
             {
                 Translation2d worldPos = GridToWorldPos(x, y);
-                double distance = new Color(distanceMap.getRGB(x, y)).getRed()/255d * fieldSize.getX();
+                double distance = new Color(distanceMap.getRGB(x, y)).getRed()/255d * fieldSize.getX() - robotWidth/2;
                 nodes[x][y] = new Node(x, y, worldPos, distance, pathfinder);
             }
         }

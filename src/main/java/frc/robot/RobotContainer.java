@@ -7,16 +7,15 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.drivetrain.DriveChassisSpeeds;
-import frc.robot.commands.drivetrain.DriveFacingPosition;
 import frc.robot.commands.drivetrain.DriveWithJoysticks;
 import frc.robot.commands.drivetrain.path_following.DriveToPoint;
 import frc.robot.commands.drivetrain.path_following.FollowPath;
@@ -39,7 +38,7 @@ public class RobotContainer {
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
     private Controls controls = new Controls(driver, operator);
-    private Pathfinder pathfinder = new Pathfinder(0, "testing");
+    private Pathfinder pathfinder = new Pathfinder(Units.inchesToMeters(0), "testing2");
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -49,6 +48,14 @@ public class RobotContainer {
         configureButtonBindings();
         drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain, controls::getDriveSpeedX,
                 controls::getDriveSpeedY, controls::getTurnSpeed, () -> true));
+
+        SmartDashboard.putNumber("Goal X", 0);
+        SmartDashboard.putNumber("Goal Y", 0);
+        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
+        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
+        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
+        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
+        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).driveable);
     }
 
     /**
@@ -59,6 +66,7 @@ public class RobotContainer {
      * it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
+    private PathfindToPoint pathfindCommand;
     private void configureButtonBindings() {
         new JoystickButton(driver, Button.kX.value).onTrue(new InstantCommand(() -> drivetrain.resetOdometry()));
         // new JoystickButton(driver, Button.kA.value).whileTrue(new DriveFacingPosition(drivetrain,
@@ -66,7 +74,13 @@ public class RobotContainer {
         new JoystickButton(driver, Button.kY.value).whileTrue(new DriveToPoint(drivetrain, new Pose2d(), driver));
 
         new JoystickButton(driver, Button.kB.value).whileTrue(new RetracePath(drivetrain));
-        new JoystickButton(driver, Button.kA.value).whileTrue(new PathfindToPoint(drivetrain, pathfinder, new Pose2d(2.5, 2.5, new Rotation2d())));
+
+        new JoystickButton(driver, Button.kA.value).onTrue(new InstantCommand(
+            () -> {
+                pathfindCommand = new PathfindToPoint(drivetrain, pathfinder, new Pose2d(SmartDashboard.getNumber("Goal X", 0), SmartDashboard.getNumber("Goal Y", 0), new Rotation2d()));
+                pathfindCommand.schedule();
+            }
+            )).onFalse(new InstantCommand(() -> pathfindCommand.end(true)));
     }
 
     public void stopControllerRumble() {

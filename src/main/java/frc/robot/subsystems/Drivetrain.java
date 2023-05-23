@@ -16,7 +16,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -93,9 +92,6 @@ public class Drivetrain extends SubsystemBase {
     /** @param speeds set target swerve module states based on a ChassisSpeed */
     public void driveChassisSpeeds(ChassisSpeeds speeds) {
         targetSpeeds = speeds;
-        SmartDashboard.putNumber("Target X (m/s)", speeds.vxMetersPerSecond);
-        SmartDashboard.putNumber("Target Y m/s", speeds.vyMetersPerSecond);
-        SmartDashboard.putNumber("Target Rotation (rad/sec)", speeds.omegaRadiansPerSecond);
         driveModuleStates(DrivetrainConfig.kinematics.toSwerveModuleStates(speeds));
     }
 
