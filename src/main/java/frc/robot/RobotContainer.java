@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -38,7 +39,7 @@ public class RobotContainer {
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
     private Controls controls = new Controls(driver, operator);
-    private Pathfinder pathfinder = new Pathfinder(Units.inchesToMeters(0), "testing2");
+    private Pathfinder pathfinder = new Pathfinder(Units.inchesToMeters(30), "testing2");
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -51,11 +52,8 @@ public class RobotContainer {
 
         SmartDashboard.putNumber("Goal X", 0);
         SmartDashboard.putNumber("Goal Y", 0);
-        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
-        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
-        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
-        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).distFromObj);
-        System.out.println(pathfinder.grid.FindCloseNode(new Translation2d(1.5, 1.5)).driveable);
+        ShuffleboardHelper.addOutput("GoalDriveable", ShuffleboardHelper.drivetrainTab, () -> pathfinder.grid.FindCloseNode(new Translation2d(SmartDashboard.getNumber("Goal X", 0), SmartDashboard.getNumber("Goal Y", 0))).driveable);
+        ShuffleboardHelper.addOutput("CurrentDriveable", ShuffleboardHelper.drivetrainTab, () -> pathfinder.grid.FindCloseNode(drivetrain.getPose().getTranslation()).driveable);
     }
 
     /**

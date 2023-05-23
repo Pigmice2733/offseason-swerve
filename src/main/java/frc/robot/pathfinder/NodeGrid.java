@@ -43,7 +43,9 @@ public class NodeGrid {
                 Translation2d worldPos = GridToWorldPos(x, y);
                 double distance = new Color(distanceMap.getRGB(x, y)).getRed()/255d * fieldSize.getX() - robotWidth/2;
                 nodes[x][y] = new Node(x, y, worldPos, distance, pathfinder);
+                System.out.print(nodes[x][y].distFromObj > 0 ? ".." : "XX");
             }
+            System.out.println();
         }
     }
     

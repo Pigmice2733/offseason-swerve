@@ -116,7 +116,7 @@ public class ShuffleboardHelper {
     }
 
     public static ShuffleboardOutput addOutput(String name, ShuffleboardContainer tab, Supplier<Object> supplier) {
-        ShuffleboardOutput shuffleboardOutput = new ShuffleboardOutput(tab.add(name, 0), supplier);
+        ShuffleboardOutput shuffleboardOutput = new ShuffleboardOutput(tab.add(name, supplier.get()), supplier);
         shuffleboardObjects.add(shuffleboardOutput);
         return shuffleboardOutput;
     }
