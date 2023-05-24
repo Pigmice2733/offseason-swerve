@@ -11,25 +11,27 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveWithJoysticks extends CommandBase {
-  private final Drivetrain drivetrain;
-  private final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
-  private final Supplier<Boolean> fieldOriented;
+    private final Drivetrain drivetrain;
+    private final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
+    private final Supplier<Boolean> fieldOriented;
 
-  public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY, Supplier<Double> turnSpeed, Supplier<Boolean> fieldOriented) {
-    this.drivetrain = drivetrain;
-    this.driveSpeedX = driveSpeedX;
-    this.driveSpeedY = driveSpeedY;
-    this.turnSpeed = turnSpeed;
-    this.fieldOriented = fieldOriented;
+    public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY,
+            Supplier<Double> turnSpeed, Supplier<Boolean> fieldOriented) {
+        this.drivetrain = drivetrain;
+        this.driveSpeedX = driveSpeedX;
+        this.driveSpeedY = driveSpeedY;
+        this.turnSpeed = turnSpeed;
+        this.fieldOriented = fieldOriented;
 
-    addRequirements(drivetrain);
-  }
+        addRequirements(drivetrain);
+    }
 
-  @Override
-  public void execute() {
-    if (fieldOriented.get())
-      drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get(), drivetrain.getHeading()));
-    else
-      drivetrain.driveChassisSpeeds(new ChassisSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get()));
+    @Override
+    public void execute() {
+        if (fieldOriented.get())
+            drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(driveSpeedY.get(), driveSpeedX.get(),
+                    -turnSpeed.get(), drivetrain.getHeading()));
+        else
+            drivetrain.driveChassisSpeeds(new ChassisSpeeds(driveSpeedY.get(), driveSpeedX.get(), -turnSpeed.get()));
     }
 }

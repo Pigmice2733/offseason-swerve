@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.drivetrain.DriveWithBoundaries;
 import frc.robot.commands.drivetrain.DriveWithJoysticks;
 import frc.robot.commands.drivetrain.path_following.DriveToPoint;
 import frc.robot.commands.drivetrain.path_following.FollowPath;
@@ -47,8 +47,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain, controls::getDriveSpeedX,
-                controls::getDriveSpeedY, controls::getTurnSpeed, () -> true));
+        drivetrain.setDefaultCommand(new DriveWithBoundaries(drivetrain, controls::getDriveSpeedX,
+                controls::getDriveSpeedY, controls::getTurnSpeed, new Translation2d(-1.5, -1.5), new Translation2d(1.5, 1.5)));
 
         SmartDashboard.putNumber("Goal X", 0);
         SmartDashboard.putNumber("Goal Y", 0);
