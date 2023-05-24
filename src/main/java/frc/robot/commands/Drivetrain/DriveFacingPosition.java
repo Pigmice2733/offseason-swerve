@@ -18,6 +18,7 @@ public class DriveFacingPosition extends CommandBase {
     private final Translation2d targetPos;
     private PIDController controller = new PIDController(0.1, 0, 0);
 
+    /** Field oriented DriveWithJoysticks with the robot always facing the specified target positions */
     public DriveFacingPosition(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY, Translation2d targetPos) {
         this.drivetrain = drivetrain;
         this.driveSpeedX = driveSpeedX;

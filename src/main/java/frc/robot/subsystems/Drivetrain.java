@@ -38,7 +38,7 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         states = getModuleStates();
-        odometry = new SwerveDriveOdometry(DrivetrainConfig.kinematics, new Rotation2d(), getModulePositions());
+        odometry = new SwerveDriveOdometry(DrivetrainConfig.KINEMATICS, new Rotation2d(), getModulePositions());
 
         resetOdometry();
 
@@ -72,7 +72,7 @@ public class Drivetrain extends SubsystemBase {
         if (states == null)
             System.out.println("Module states are NULL");
 
-        SwerveDriveKinematics.desaturateWheelSpeeds(states, DrivetrainConfig.MAX_VELOCITY_METERS_PER_SECOND);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, DrivetrainConfig.MAX_ATTAINABLE_SPEED);
 
         frontLeftModule.set(calculateFeedForward(states[0].speedMetersPerSecond),
                 states[0].angle.getRadians());
@@ -92,12 +92,12 @@ public class Drivetrain extends SubsystemBase {
     /** @param speeds set target swerve module states based on a ChassisSpeed */
     public void driveChassisSpeeds(ChassisSpeeds speeds) {
         targetSpeeds = speeds;
-        driveModuleStates(DrivetrainConfig.kinematics.toSwerveModuleStates(speeds));
+        driveModuleStates(DrivetrainConfig.KINEMATICS.toSwerveModuleStates(speeds));
     }
 
     /** @param states set target swerve module states */
     public void driveModuleStates(SwerveModuleState[] states) {
-        targetSpeeds = DrivetrainConfig.kinematics.toChassisSpeeds(states);
+        targetSpeeds = DrivetrainConfig.KINEMATICS.toChassisSpeeds(states);
         this.states = states;
     }
 

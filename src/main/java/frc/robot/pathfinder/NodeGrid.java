@@ -18,12 +18,9 @@ public class NodeGrid {
     private int numNodesX;
     private int numNodesY;
 
-    private Pathfinder pathfinder;
 
     public NodeGrid(Translation2d botLeftBound, Translation2d topRightBound, double robotWidth, BufferedImage distanceMap, Pathfinder pathfinder)
     {
-        this.pathfinder = pathfinder;
-
         numNodesX = distanceMap.getWidth();
         numNodesY = distanceMap.getHeight();
 

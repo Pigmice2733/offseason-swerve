@@ -13,6 +13,7 @@ public class DriveChassisSpeeds extends CommandBase {
   private final Drivetrain drivetrain;
   private ChassisSpeeds speeds;
 
+  /** Drive a steady ChassisSpeed for testing */
   public DriveChassisSpeeds(Drivetrain drivetrain, ChassisSpeeds speeds) {
     this.drivetrain = drivetrain;
     this.speeds = speeds;
@@ -23,19 +24,16 @@ public class DriveChassisSpeeds extends CommandBase {
     drivetrain.resetOdometry();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     drivetrain.driveChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(speeds, drivetrain.getHeading()));
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     drivetrain.driveChassisSpeeds(new ChassisSpeeds());
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

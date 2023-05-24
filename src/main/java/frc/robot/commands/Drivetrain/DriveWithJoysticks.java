@@ -15,6 +15,7 @@ public class DriveWithJoysticks extends CommandBase {
     private final Supplier<Double> driveSpeedX, driveSpeedY, turnSpeed;
     private final Supplier<Boolean> fieldOriented;
 
+    /** The default drive command for swerve. Optional field oriented move. */
     public DriveWithJoysticks(Drivetrain drivetrain, Supplier<Double> driveSpeedX, Supplier<Double> driveSpeedY,
             Supplier<Double> turnSpeed, Supplier<Boolean> fieldOriented) {
         this.drivetrain = drivetrain;

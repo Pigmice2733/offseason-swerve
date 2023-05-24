@@ -11,19 +11,25 @@ import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.Constants.DrivetrainConfig;
 
 public class PathfinderResult {
-    public final boolean pathFound;
-    public final ArrayList<Translation2d> simplifiedPath;
-    public final ArrayList<Node> path;
+    private final boolean pathFound;
+    private final ArrayList<Translation2d> simplifiedPath;
+    private final ArrayList<Node> path;
 
+    /** A result returned by Pathfinder.FindPath() */
     public PathfinderResult(boolean pathFound, ArrayList<Translation2d> simplifiedPath, ArrayList<Node> path) {
         this.pathFound = pathFound;
         this.simplifiedPath = simplifiedPath;
         this.path = path;
     }
 
+    /** @return if a valid path was found */
+    public boolean pathFound() {
+        return pathFound;
+    }
+
+    /** Generate a PathPlannerTrajectory from this pathfiner result. null if there is no valid path */
     public PathPlannerTrajectory getAsTrajectory() {
-        if (!pathFound) return null;
-        if (simplifiedPath.size() < 2) return null;
+        if (!pathFound || simplifiedPath.size() < 2) return null;
 
         ArrayList<PathPoint> points = new ArrayList<PathPoint>();
         for (int i = 0; i < simplifiedPath.size()-1; i++) {

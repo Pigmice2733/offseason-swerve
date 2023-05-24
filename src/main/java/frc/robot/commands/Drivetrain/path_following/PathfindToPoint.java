@@ -17,6 +17,7 @@ public class PathfindToPoint extends CommandBase {
 
     private FollowPath pathCommand;
 
+    /** Find a path between the robots current pose and goal pose then follow it */
     public PathfindToPoint(Drivetrain drivetrain, Pathfinder pathfinder, Pose2d goalPose) {
         this.drivetrain = drivetrain;
         this.pathfinder = pathfinder;
@@ -27,17 +28,12 @@ public class PathfindToPoint extends CommandBase {
     public void initialize() {
         PathfinderResult result = pathfinder.FindPath(drivetrain.getPose().getTranslation(), goalPose.getTranslation());
         
-        if (!result.pathFound) {
+        if (!result.pathFound()) {
             end(true);
             return;
         }
         pathCommand = new FollowPath(drivetrain, result.getAsTrajectory());
         pathCommand.schedule();
-    }
-
-    @Override
-    public void execute() {
-
     }
 
     @Override

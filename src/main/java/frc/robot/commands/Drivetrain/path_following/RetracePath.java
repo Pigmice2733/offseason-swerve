@@ -13,8 +13,6 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPoint;
 
-import org.opencv.core.Point;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -25,6 +23,7 @@ import frc.robot.subsystems.Drivetrain;
 public class RetracePath extends CommandBase {
     private final Drivetrain drivetrain;
 
+    /** While running: periodicly record robots positions. On End: scheduce a FollowPath command to retrace the robots path */
     public RetracePath(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
     }
@@ -36,9 +35,6 @@ public class RetracePath extends CommandBase {
     @Override
     public void initialize() {
         positions = new ArrayList<Pose2d>();
-
-        // timer.cancel();
-        // timer.purge();
 
         task = new TimerTask() {
             @Override

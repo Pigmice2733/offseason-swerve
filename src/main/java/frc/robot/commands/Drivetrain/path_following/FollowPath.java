@@ -31,7 +31,7 @@ public class FollowPath extends SequentialCommandGroup {
             new PPSwerveControllerCommand(
                 trajectory,
                 drivetrain::getPose,
-                DrivetrainConfig.kinematics,
+                DrivetrainConfig.KINEMATICS,
                 DrivetrainConfig.PATH_DRIVE_PID, // X controller
                 DrivetrainConfig.PATH_DRIVE_PID, // Y controller 
                 DrivetrainConfig.PATH_TURN_PID, // turn controller
@@ -56,7 +56,7 @@ public class FollowPath extends SequentialCommandGroup {
                 new PPSwerveControllerCommand(
                     trajectory,
                     drivetrain::getPose,
-                    DrivetrainConfig.kinematics,
+                    DrivetrainConfig.KINEMATICS,
                     DrivetrainConfig.PATH_DRIVE_PID, // X controller
                     DrivetrainConfig.PATH_DRIVE_PID, // Y controller 
                     DrivetrainConfig.PATH_TURN_PID, // turn controller
