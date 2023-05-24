@@ -35,8 +35,8 @@ public class DriveWithBoundaries extends CommandBase {
 
     @Override
     public void execute() {
-        double vx = driveSpeedX.get();
-        double vy = driveSpeedY.get();
+        double vx = driveSpeedY.get();
+        double vy = driveSpeedX.get();
 
         Pose2d pose = drivetrain.getPose();
         if (pose.getX() < minBound.getX())

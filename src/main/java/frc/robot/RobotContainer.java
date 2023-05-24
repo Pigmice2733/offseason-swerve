@@ -47,8 +47,10 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        drivetrain.setDefaultCommand(new DriveWithBoundaries(drivetrain, controls::getDriveSpeedX,
-                controls::getDriveSpeedY, controls::getTurnSpeed, new Translation2d(-1.5, -1.5), new Translation2d(1.5, 1.5)));
+        drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain, controls::getDriveSpeedX,
+                controls::getDriveSpeedY, controls::getTurnSpeed, () -> true));
+        // drivetrain.setDefaultCommand(new DriveWithBoundaries(drivetrain, controls::getDriveSpeedX,
+        //         controls::getDriveSpeedY, controls::getTurnSpeed, new Translation2d(-1.5, -1.5), new Translation2d(1.5, 1.5)));
 
         SmartDashboard.putNumber("Goal X", 0);
         SmartDashboard.putNumber("Goal Y", 0);
