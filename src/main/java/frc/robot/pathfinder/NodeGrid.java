@@ -74,8 +74,8 @@ public class NodeGrid {
 
         System.out.println(xDriveable.size());
 
-        ShuffleboardHelper.pathfindingTab.add("X", xPositions.stream().mapToDouble(Double::doubleValue).toArray());
-        ShuffleboardHelper.pathfindingTab.add("Y", yPositions.stream().mapToDouble(Double::doubleValue).toArray());
+        // ShuffleboardHelper.pathfindingTab.add("X", xPositions.stream().mapToDouble(Double::doubleValue).toArray());
+        // ShuffleboardHelper.pathfindingTab.add("Y", yPositions.stream().mapToDouble(Double::doubleValue).toArray());
         
         // ShuffleboardHelper.pathfindingTab.add("Y", yPositions.toArray());
         // ShuffleboardHelper.pathfindingTab.addDoubleArray("X", xPositions.toArray());

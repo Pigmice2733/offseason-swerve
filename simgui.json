@@ -12,6 +12,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/Drivetrain/Field": "Field2d",
       "/Shuffleboard/Drivetrain/Heading": "Gyro"
     }
   }

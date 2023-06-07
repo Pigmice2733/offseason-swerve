@@ -1,0 +1,85 @@
+{
+  "version": "2.3.0",
+  "layout": [
+    {
+      "type": 11,
+      "fields": [
+        "NT:/Shuffleboard/Pathfinding/X",
+        "NT:/Shuffleboard/Pathfinding/Y"
+      ],
+      "listFields": [],
+      "options": {
+        "width": 60,
+        "height": 60,
+        "group": 247,
+        "pointShape": "circle",
+        "pointSize": "medium"
+      },
+      "title": "Points"
+    },
+    {
+      "type": 6,
+      "fields": [],
+      "listFields": [
+        [],
+        [
+          {
+            "type": "Robot",
+            "key": "NT:/Shuffleboard/Drivetrain/Field/Robot",
+            "fieldTypeIndex": 0
+          }
+        ]
+      ],
+      "options": {
+        "field": "2023",
+        "alliance": "blue",
+        "robot": "KitBot",
+        "unitDistance": "meters",
+        "unitRotation": "radians"
+      },
+      "title": "3D Field"
+    },
+    {
+      "type": 9,
+      "fields": [
+        "NT:/Shuffleboard/Drivetrain/Module States",
+        null,
+        "NT:/Shuffleboard/Drivetrain/Heading/Value"
+      ],
+      "listFields": [],
+      "options": {
+        "maxSpeed": 4.5,
+        "rotationUnits": "radians",
+        "arrangement": "0,1,2,3",
+        "sizeLeftRight": 0.65,
+        "sizeFrontBack": 0.65,
+        "forwardDirection": "up"
+      },
+      "title": "Swerve"
+    },
+    {
+      "type": 5,
+      "fields": [],
+      "listFields": [
+        [
+          {
+            "type": "Robot",
+            "key": "NT:/Shuffleboard/Drivetrain/Field/Robot",
+            "fieldTypeIndex": 0
+          }
+        ]
+      ],
+      "options": {
+        "game": "2023",
+        "unitDistance": "meters",
+        "unitRotation": "radians",
+        "origin": "right",
+        "size": 0.75,
+        "allianceBumpers": "auto",
+        "allianceOrigin": "blue",
+        "orientation": "blue left, red right"
+      },
+      "title": "Odometry"
+    }
+  ]
+}
