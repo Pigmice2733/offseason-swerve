@@ -10,12 +10,16 @@ import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -59,6 +63,27 @@ public class Drivetrain extends SubsystemBase {
         ShuffleboardHelper.addOutput("Velocity Y", ShuffleboardHelper.drivetrainTab, () -> gyro.getVelocityY());
         ShuffleboardHelper.addOutput("Speed", ShuffleboardHelper.drivetrainTab,
                 () -> Math.sqrt(Math.pow(gyro.getVelocityX(), 2) + Math.pow(gyro.getVelocityY(), 2)));
+
+        // ShuffleboardHelper.addOutput("Front Left State",
+        // ShuffleboardHelper.drivetrainTab,
+        // () ->
+        // frontLeftModule.set(calculateFeedForward(states[0].speedMetersPerSecond),
+        // states[0].angle.getRadians()));
+        ShuffleboardHelper.addOutput("Module States", ShuffleboardHelper.drivetrainTab,
+                () -> new double[] {
+                        frontLeftModule.getDriveVelocity(),
+                        frontLeftModule.getSteerAngle(),
+                        frontRightModule.getDriveVelocity(),
+                        frontRightModule.getSteerAngle(),
+                        backLeftModule.getDriveVelocity(),
+                        backLeftModule.getSteerAngle(),
+                        backRightModule.getDriveVelocity(),
+                        backRightModule.getSteerAngle() });
+
+        Field2d field = new Field2d();
+        field.setRobotPose(new Pose2d());
+
+        ShuffleboardHelper.drivetrainTab.add("Field", field);
     }
 
     @Override

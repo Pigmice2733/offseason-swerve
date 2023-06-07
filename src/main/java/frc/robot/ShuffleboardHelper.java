@@ -20,6 +20,7 @@ public class ShuffleboardHelper {
     private static boolean debugEnabled = true;
 
     public static ShuffleboardTab drivetrainTab = Shuffleboard.getTab("Drivetrain");
+    public static ShuffleboardTab pathfindingTab = Shuffleboard.getTab("Pathfinding");
 
     public static ArrayList<ShuffleboardObject> shuffleboardObjects = new ArrayList<ShuffleboardObject>();
 

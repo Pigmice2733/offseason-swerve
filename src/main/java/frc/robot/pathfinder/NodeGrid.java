@@ -1,12 +1,14 @@
 package frc.robot.pathfinder;
 
 import java.util.ArrayList;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.ShuffleboardHelper;
 
 public class NodeGrid {
     private Node[][] nodes;
@@ -33,6 +35,14 @@ public class NodeGrid {
         this.botLeftBound = botLeftBound.plus(centerOffset.div(2d));
 
         nodes = new Node[numNodesX][numNodesY];
+        System.out.println("X: " + numNodesX + ", Y: " + numNodesY);
+
+        ArrayList<Double> xDriveable = new ArrayList<Double>();
+        ArrayList<Double> yDriveable = new ArrayList<Double>();
+
+        ArrayList<Double> xNotDriveable = new ArrayList<Double>();
+        ArrayList<Double> yNotDriveable = new ArrayList<Double>();
+
         for (int x = 0; x < numNodesX; x++)
         {
             for (int y = 0; y < numNodesY; y++)
@@ -40,10 +50,35 @@ public class NodeGrid {
                 Translation2d worldPos = GridToWorldPos(x, y);
                 double distance = new Color(distanceMap.getRGB(x, y)).getRed()/255d * fieldSize.getX() - robotWidth/2;
                 nodes[x][y] = new Node(x, y, worldPos, distance, pathfinder);
-                System.out.print(nodes[x][y].distFromObj > 0 ? ".." : "XX");
+
+                if (x % 3 == 0 && y % 3 == 0) {
+                if (nodes[x][y].driveable) {
+                    xDriveable.add((double)x);
+                    yDriveable.add((double)y);
+                }
+                else {
+                    xNotDriveable.add((double)x);
+                    yNotDriveable.add((double)y);
+                }
+                }
+                //System.out.print(nodes[x][y].distFromObj > 0 ? ".." : "XX");
             }
-            System.out.println();
+            //System.out.println();
         }
+
+        ArrayList<Double> xPositions = (ArrayList<Double>) Stream.concat(xDriveable.stream(), xNotDriveable.stream())
+        .collect(Collectors.toList());
+
+        ArrayList<Double> yPositions = (ArrayList<Double>) Stream.concat(yDriveable.stream(), yNotDriveable.stream())
+        .collect(Collectors.toList());
+
+        System.out.println(xDriveable.size());
+
+        ShuffleboardHelper.pathfindingTab.add("X", xPositions.stream().mapToDouble(Double::doubleValue).toArray());
+        ShuffleboardHelper.pathfindingTab.add("Y", yPositions.stream().mapToDouble(Double::doubleValue).toArray());
+        
+        // ShuffleboardHelper.pathfindingTab.add("Y", yPositions.toArray());
+        // ShuffleboardHelper.pathfindingTab.addDoubleArray("X", xPositions.toArray());
     }
     
     /** @return the field position of the given grid position */
