@@ -6,6 +6,7 @@ package frc.robot.commands.drivetrain.path_following;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.DrivetrainConfig;
 import frc.robot.pathfinder.Pathfinder;
 import frc.robot.pathfinder.PathfinderResult;
 import frc.robot.subsystems.Drivetrain;
@@ -26,13 +27,13 @@ public class PathfindToPoint extends CommandBase {
 
     @Override
     public void initialize() {
-        PathfinderResult result = pathfinder.FindPath(drivetrain.getPose().getTranslation(), goalPose.getTranslation());
+        PathfinderResult result = pathfinder.findPath(drivetrain.getPose().getTranslation(), goalPose.getTranslation());
         
         if (!result.pathFound()) {
             end(true);
             return;
         }
-        pathCommand = new FollowPath(drivetrain, result.getAsTrajectory());
+        pathCommand = new FollowPath(drivetrain, result.getAsTrajectory(DrivetrainConfig.PATH_CONSTRAINTS));
         pathCommand.schedule();
     }
 

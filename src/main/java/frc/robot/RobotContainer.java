@@ -21,8 +21,8 @@ import frc.robot.commands.drivetrain.path_following.DriveToPoint;
 import frc.robot.commands.drivetrain.path_following.FollowPath;
 import frc.robot.commands.drivetrain.path_following.PathfindToPoint;
 import frc.robot.commands.drivetrain.path_following.RetracePath;
-import frc.robot.pathfinder.Pathfinder;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.pathfinder.Pathfinder;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
