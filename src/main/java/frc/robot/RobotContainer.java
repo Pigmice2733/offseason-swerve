@@ -6,7 +6,6 @@ package frc.robot;
 
 import com.pigmice.frc.lib.pathfinder.Pathfinder;
 import com.pigmice.frc.lib.shuffleboard_helper.ShuffleboardHelper;
-import com.pigmice.frc.lib.swerve.SwerveConfig;
 import com.pigmice.frc.lib.swerve.SwerveDrivetrain;
 import com.pigmice.frc.lib.swerve.commands.DriveWithJoysticks;
 import com.pigmice.frc.lib.swerve.commands.path_following.FollowPath;

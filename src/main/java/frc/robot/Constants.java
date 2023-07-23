@@ -57,8 +57,8 @@ public final class Constants {
         }
 
         public final static class DrivetrainConfig {
-                private static final double MAX_DRIVE_SPEED = 2.5; // max meters / second
-                private static final double MAX_TURN_SPEED = 4; // max radians / second
+                public static final double MAX_DRIVE_SPEED = 2.5; // max meters / second
+                public static final double MAX_TURN_SPEED = 4; // max radians / second
 
                 private static final double TRACK_WIDTH_METERS = 0.5842; // distance from the center of one wheel to
                                                                          // another
