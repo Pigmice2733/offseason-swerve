@@ -4,6 +4,15 @@
 
 package frc.robot;
 
+import com.pigmice.frc.lib.pathfinder.Pathfinder;
+import com.pigmice.frc.lib.shuffleboard_helper.ShuffleboardHelper;
+import com.pigmice.frc.lib.swerve.SwerveConfig;
+import com.pigmice.frc.lib.swerve.SwerveDrivetrain;
+import com.pigmice.frc.lib.swerve.commands.DriveWithJoysticks;
+import com.pigmice.frc.lib.swerve.commands.path_following.FollowPath;
+import com.pigmice.frc.lib.swerve.commands.path_following.RetracePath;
+import com.pigmice.frc.lib.swerve.commands.pathfinder.PathfindToPoint;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -16,13 +25,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.drivetrain.DriveWithJoysticks;
-import frc.robot.commands.drivetrain.path_following.DriveToPoint;
-import frc.robot.commands.drivetrain.path_following.FollowPath;
-import frc.robot.commands.drivetrain.path_following.PathfindToPoint;
-import frc.robot.commands.drivetrain.path_following.RetracePath;
-import frc.robot.pathfinder.Pathfinder;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.Constants.DrivetrainConfig;
+import frc.robot.Constants.ShuffleboardTabs;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -34,7 +38,7 @@ import frc.robot.subsystems.Drivetrain;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    private Drivetrain drivetrain = new Drivetrain();
+    private SwerveDrivetrain drivetrain = new SwerveDrivetrain(DrivetrainConfig.SWERVE_CONFIG);
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
     private Controls controls = new Controls(driver, operator);
@@ -48,13 +52,14 @@ public class RobotContainer {
         configureButtonBindings();
         drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain, controls::getDriveSpeedX,
                 controls::getDriveSpeedY, controls::getTurnSpeed, () -> true));
-        // drivetrain.setDefaultCommand(new DriveWithBoundaries(drivetrain, controls::getDriveSpeedX,
-        //         controls::getDriveSpeedY, controls::getTurnSpeed, new Translation2d(-1.5, -1.5), new Translation2d(1.5, 1.5)));
 
         SmartDashboard.putNumber("Goal X", 0);
         SmartDashboard.putNumber("Goal Y", 0);
-        ShuffleboardHelper.addOutput("GoalDriveable", ShuffleboardHelper.drivetrainTab, () -> pathfinder.grid.FindCloseNode(new Translation2d(SmartDashboard.getNumber("Goal X", 0), SmartDashboard.getNumber("Goal Y", 0))).driveable);
-        ShuffleboardHelper.addOutput("CurrentDriveable", ShuffleboardHelper.drivetrainTab, () -> pathfinder.grid.FindCloseNode(drivetrain.getPose().getTranslation()).driveable);
+        ShuffleboardHelper.addOutput("GoalDriveable", ShuffleboardTabs.DRIVETRAIN,
+                () -> pathfinder.grid.FindCloseNode(new Translation2d(SmartDashboard.getNumber("Goal X", 0),
+                        SmartDashboard.getNumber("Goal Y", 0))).driveable);
+        ShuffleboardHelper.addOutput("CurrentDriveable", ShuffleboardTabs.DRIVETRAIN,
+                () -> pathfinder.grid.FindCloseNode(drivetrain.getPose().getTranslation()).driveable);
     }
 
     /**
@@ -66,20 +71,19 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private PathfindToPoint pathfindCommand;
+
     private void configureButtonBindings() {
         new JoystickButton(driver, Button.kX.value).onTrue(new InstantCommand(() -> drivetrain.resetOdometry()));
-        // new JoystickButton(driver, Button.kA.value).whileTrue(new DriveFacingPosition(drivetrain,
-        //         controls::getDriveSpeedX, controls::getDriveSpeedY, new Translation2d(0, 0)));
-        new JoystickButton(driver, Button.kY.value).whileTrue(new DriveToPoint(drivetrain, new Pose2d(), driver));
 
         new JoystickButton(driver, Button.kB.value).whileTrue(new RetracePath(drivetrain));
 
         new JoystickButton(driver, Button.kA.value).onTrue(new InstantCommand(
-            () -> {
-                pathfindCommand = new PathfindToPoint(drivetrain, pathfinder, new Pose2d(SmartDashboard.getNumber("Goal X", 0), SmartDashboard.getNumber("Goal Y", 0), new Rotation2d()));
-                pathfindCommand.schedule();
-            }
-            )).onFalse(new InstantCommand(() -> pathfindCommand.end(true)));
+                () -> {
+                    pathfindCommand = new PathfindToPoint(drivetrain, pathfinder,
+                            new Pose2d(SmartDashboard.getNumber("Goal X", 0), SmartDashboard.getNumber("Goal Y", 0),
+                                    new Rotation2d()));
+                    pathfindCommand.schedule();
+                })).onFalse(new InstantCommand(() -> pathfindCommand.end(true)));
     }
 
     public void stopControllerRumble() {

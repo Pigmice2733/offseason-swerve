@@ -21,8 +21,8 @@ public class RumbleController extends SequentialCommandGroup {
     /** Rumble the controller with a given time and strength */
     public RumbleController(XboxController controller, RumbleType type, double seconds, double strength) {
         addCommands(
-            new InstantCommand(() -> controller.setRumble(type, strength)),
-            new WaitCommand(seconds),
-            new InstantCommand(() -> controller.setRumble(type, 0)));
+                new InstantCommand(() -> controller.setRumble(type, strength)),
+                new WaitCommand(seconds),
+                new InstantCommand(() -> controller.setRumble(type, 0)));
     }
 }
