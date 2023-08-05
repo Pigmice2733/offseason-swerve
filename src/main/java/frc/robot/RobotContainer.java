@@ -98,7 +98,11 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         var eventMap = new HashMap<String, Command>();
-        eventMap.put("TestEvent", new InstantCommand(() -> System.out.println("EVENT CALLED")));
-        return new FollowPath(drivetrain, "New New Path", eventMap, false);
+        eventMap.put("TestEvent", new InstantCommand(() -> {
+            System.out.println("EVENT CALLED");
+        }));
+        return new FollowPath(drivetrain, "EventsTest", eventMap, false).andThen(new InstantCommand(() -> {
+            System.out.println("Done");
+        }));
     }
 }

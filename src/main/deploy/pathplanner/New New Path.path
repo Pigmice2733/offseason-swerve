@@ -95,18 +95,18 @@
           "TestEvent"
         ],
         "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "waitBehavior": "before",
+        "waitTime": 1.0
       }
     },
     {
       "anchorPoint": {
-        "x": 0.004393822310127724,
-        "y": 3.011237530311467
+        "x": -0.009015025162718722,
+        "y": 2.7330744533101043
       },
       "prevControl": {
-        "x": 0.602492842434053,
-        "y": 3.011237530311467
+        "x": 0.5890839949612066,
+        "y": 2.7330744533101043
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -125,5 +125,12 @@
   "maxVelocity": null,
   "maxAcceleration": 1.0,
   "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 1.8327272727272599,
+      "names": [
+        "event"
+      ]
+    }
+  ]
 }
