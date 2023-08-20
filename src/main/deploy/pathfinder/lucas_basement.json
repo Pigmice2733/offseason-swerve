@@ -1,0 +1,17 @@
+{
+    "config" : {
+        "bottomLeftPositionMeters": [0.0, 0.0],
+        "fieldSizeMeters": [2.845, 3.225],
+        "nodeSpacingMeters": 0.05
+    },
+    
+    "obstacles": [
+        {
+            "type": "rectangle",
+            "xPos": 1.4225,
+            "yPos": 1.6125,
+            "width": 0.762,
+            "height": 0.508
+        }
+    ]
+}

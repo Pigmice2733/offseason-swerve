@@ -15,5 +15,18 @@
       "/Shuffleboard/Drivetrain/Field": "Field2d",
       "/Shuffleboard/Drivetrain/Heading": "Gyro"
     }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "Shuffleboard": {
+        "Drivetrain": {
+          "Back Left": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      }
+    }
   }
 }

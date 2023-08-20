@@ -6,10 +6,17 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pigmice.frc.lib.pathfinder.GridVisualizer;
+import com.pigmice.frc.lib.pathfinder.Pathfinder;
 import com.pigmice.frc.lib.swerve.SwerveDrivetrain;
 import com.pigmice.frc.lib.swerve.commands.DriveWithJoysticks;
 import com.pigmice.frc.lib.swerve.commands.path_following.FollowPath;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -30,19 +37,19 @@ import frc.robot.Constants.DrivetrainConfig;
  */
 public class RobotContainer {
     private SwerveDrivetrain drivetrain = new SwerveDrivetrain(DrivetrainConfig.SWERVE_CONFIG);
+    private Pathfinder pathfinder = new Pathfinder(Units.inchesToMeters(34), "lucas_basement");
+
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
     private Controls controls = new Controls(driver, operator);
-    // private Pathfinder pathfinder = new Pathfinder(Units.inchesToMeters(30),
-    // "testing2");
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-        drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain, controls::getDriveSpeedX,
+        // configureButtonBindings();
+        drivetrain.setDefaultCommand(new DriveWithJoysticks(drivetrain,
+                controls::getDriveSpeedX,
                 controls::getDriveSpeedY, controls::getTurnSpeed, () -> true));
 
         /*
@@ -56,6 +63,20 @@ public class RobotContainer {
          * () -> pathfinder.grid.FindCloseNode(drivetrain.getPose().getTranslation()).
          * driveable);
          */
+
+        drivetrain.resetOdometry(new Pose2d(0.4572, 0.4572, new Rotation2d()));
+
+        var result = pathfinder.findPath(new Translation2d(0.4572, 0.4572), new Translation2d(2.3878, 2.7678));
+
+        new GridVisualizer(pathfinder).addWaypoints(result)
+                .addTrajectory(result.getAsTrajectory(new PathConstraints(1, 1)))
+                .saveAsPNG("C:/Users/lucah/Desktop/testing.png");
+
+        // var result = pathfinder.findPath(new Translation2d(0.4572, 0.4572), new
+        // Translation2d(2.3878, 2.7678));
+        // new GridVisualizer(pathfinder).addWaypoints(result)
+        // .addTrajectory(result.getAsTrajectory(new PathConstraints(1, 1)))
+        // .saveAsPNG("C:/Users/lucah/Desktop/testing.png");
     }
 
     /**
@@ -70,7 +91,8 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
-        new JoystickButton(driver, Button.kX.value).onTrue(new InstantCommand(() -> drivetrain.resetOdometry()));
+        // new JoystickButton(driver, Button.kX.value).onTrue(new InstantCommand(() ->
+        // drivetrain.resetOdometry()));
         /*
          * new JoystickButton(driver, Button.kB.value).whileTrue(new
          * RetracePath(drivetrain));
@@ -87,8 +109,8 @@ public class RobotContainer {
     }
 
     public void stopControllerRumble() {
-        driver.setRumble(RumbleType.kBothRumble, 0);
-        operator.setRumble(RumbleType.kBothRumble, 0);
+        // driver.setRumble(RumbleType.kBothRumble, 0);
+        // operator.setRumble(RumbleType.kBothRumble, 0);
     }
 
     /**
@@ -97,12 +119,22 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        var eventMap = new HashMap<String, Command>();
-        eventMap.put("TestEvent", new InstantCommand(() -> {
-            System.out.println("EVENT CALLED");
-        }));
-        return new FollowPath(drivetrain, "EventsTest", eventMap, false).andThen(new InstantCommand(() -> {
-            System.out.println("Done");
-        }));
+        // var eventMap = new HashMap<String, Command>();
+        // eventMap.put("TestEvent", new InstantCommand(() -> {
+        // System.out.println("EVENT CALLED");
+        // }));
+        // return new FollowPath(drivetrain, "EventsTest", eventMap, false).andThen(new
+        // InstantCommand(() -> {
+        // System.out.println("Done");
+        // }));
+
+        var result = pathfinder.findPath(new Translation2d(0.4572, 0.4572), new Translation2d(2.3878, 2.7678));
+
+        new GridVisualizer(pathfinder).addWaypoints(result)
+                .addTrajectory(result.getAsTrajectory(new PathConstraints(1, 1)))
+                .saveAsPNG("C:/Users/lucah/Desktop/testing.png");
+
+        return new FollowPath(drivetrain,
+                result.getAsTrajectory(Constants.DrivetrainConfig.SWERVE_CONFIG.PATH_CONSTRAINTS));
     }
 }

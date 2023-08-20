@@ -60,7 +60,7 @@ public final class Constants {
 
                 private static final double TRACK_WIDTH_METERS = 0.5842; // distance from the center of one wheel to
                                                                          // another
-                                                                         // (meters)
+
                 private final static SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
                                 new Translation2d(TRACK_WIDTH_METERS / 2, TRACK_WIDTH_METERS / 2), // Front left
                                 new Translation2d(TRACK_WIDTH_METERS / 2, -TRACK_WIDTH_METERS / 2), // Front right
